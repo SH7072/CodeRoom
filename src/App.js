@@ -9,16 +9,17 @@ import {
   Outlet,
   Routes,
 } from "react-router-dom";
-import Home from "./components/Home"
 import Signup from "./components/Signup"
 import Login from "./components/Login"
 import Editorpage from './components/Editorpage';
+import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
+import ClassroomDashboard from './components/ClassroomDashboard';
 
 
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
-//     element: <Home />,
+//     element: <ClassroomDashboard />,
 //   }, {
 // path: "signup",
 //     element: <Signup />,
@@ -35,12 +36,12 @@ import Editorpage from './components/Editorpage';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
-      <Route index element={<Home />} />
+      <Route index element={<ClassroomDashboard />} />
       <Route path="signup" element={<Signup />} />
       <Route path="login" element={<Login />} />
       <Route path="Editorpage" element={<Editorpage />} />
       <Route path='interview' element={<Root />}>
-        <Route index element={<Home />} />
+        <Route index element={<ClassroomDashboard />} />
         <Route path='login' element={<Login />} />
         <Route path='new' element={<Signup />} />
       </Route>
@@ -76,6 +77,7 @@ function Root() {
           <Link to="/login">Login</Link>
         </li>
       </ul> */}
+      <ClassroomNavbar />
       <Outlet />
     </div>
   );
