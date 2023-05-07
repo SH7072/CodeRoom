@@ -1,4 +1,4 @@
-import { IconBookmark, IconDotsVertical, IconHeart, IconShare } from '@tabler/icons-react';
+import { IconBookmark, IconDotsVertical, IconFolder, IconHeart, IconPresentation, IconShare } from '@tabler/icons-react';
 import {
     Card,
     Image,
@@ -12,51 +12,64 @@ import {
     rem,
     Menu,
     UnstyledButton,
+    Button,
+    Space,
+    Flex,
 } from '@mantine/core';
 import { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     card: {
-        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        // alignItems: 'flex-end',
+        // position: 'relative',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         margin: '15px',
         width: '300px',
         height: '300px',
     },
 
-    rating: {
+    options: {
         display: 'block',
-        marginTop: theme.spacing.md,
+        marginTop: '13px',
         marginBottom: rem(5),
         position: 'absolute',
         top: theme.spacing.xs,
         right: rem(12),
-        pointerEvents: 'none',
+        // pointerEvents: 'none',
     },
 
     title: {
         display: 'block',
-        marginTop: theme.spacing.md,
+        marginTop: '5px',
         marginBottom: rem(5),
         position: 'absolute',
         top: theme.spacing.xs,
         left: rem(12),
         pointerEvents: 'none',
+        width: '250px',
     },
 
     description: {
         display: 'block',
-        marginTop: theme.spacing.md,
-        marginBottom: rem(5),
+        // marginTop: theme.spacing.md,
+        // marginBottom: rem(5),
         position: 'absolute',
-        top: theme.spacing.xs,
+        top: rem(12),
         left: rem(12),
         pointerEvents: 'none',
     },
 
 
     action: {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        // backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        // marginRight: theme.spacing.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        color: 'black',
         ...theme.fn.hover({
             backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
         }),
@@ -64,17 +77,21 @@ const useStyles = createStyles((theme) => ({
 
     footer: {
         marginTop: theme.spacing.md,
+        position: 'absolute',
+        top: rem(50),
+        right: rem(12),
+        pointerEvents: 'none',
     },
 }));
 
 const data = {
     "image": "https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     "link": "https://mantine.dev/",
-    "title": "Resident Evil Village review",
+    "title": "Resident Evil Village review kjfdb dnmws dw s",
     "rating": "outstanding",
     "description": "A",
     "author": {
-        "name": "Bill Wormeater",
+        "name": "Bill Wormeater sjdbsa dmswa djks ",
         "image": "https://images.unsplash.com/photo-1593229874334-90d965f27c42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     }
 }
@@ -86,14 +103,14 @@ const Options = forwardRef(({ ...others }: props, ref) => {
                 ref={ref}
                 sx={(theme) => ({
                     display: 'block',
-                    width: '100%',
+                    width: '100px',
                     padding: '4px',
                     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
                     borderRadius: '48%',
 
                     '&:hover': {
                         backgroundColor:
-                            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
+                            theme.colorScheme === 'dark' ? theme.colors.dark[8] : "black",
                         // backgroundRadius: theme.radius.sm,
                     },
 
@@ -114,12 +131,11 @@ const Class = () => {
 
     return (
         <Card withBorder radius="md" className={classes.card}>
-            <Card.Section>
-                <a {...linkProps}>
-                    {/* <img src={data.image} height={120} zIndex={0} /> */}
-                    <Image src={data.image} height={120} zIndex={0} />
-                </a>
-                {/* <Menu sx={classes.rating}>
+            <Card.Section sx={{ display: "flex", flexDirection: 'column' }} >
+                {/* <a {...linkProps}> */}
+                <Image src={data.image} height={110} w={'300px'} zIndex={0} />
+                {/* </a> */}
+                <Menu shadow="md" width={100} sx={classes.options} zIndex={2}>
                     <Menu.Target>
                         <Options />
                     </Menu.Target>
@@ -128,41 +144,50 @@ const Class = () => {
                             Edit
                         </Menu.Item>
                         <Menu.Item>
-                            Delete
+                            Unenroll
+                        </Menu.Item>
+                        <Menu.Item>
+                            Archive
                         </Menu.Item>
                     </Menu.Dropdown>
-                </Menu> */}
+                </Menu>
 
-            </Card.Section>
-
-            <Text className={classes.title} fw={500} component="a" {...linkProps} color='white'>
-                {data.title}
-            </Text>
-            <Text fz="sm" color="dimmed" lineClamp={4} className={classes.description}>
-                {data.description}
-            </Text>
-
-
-            <Group position="apart" className={classes.footer}>
-                <Center>
-                    <Avatar src={data.author.image} size={24} radius="xl" mr="xs" />
-                    <Text fz="sm" inline>
+                <Group className={classes.title}>
+                    <Text fw={400} fz={"20px"} color='white' truncate>
+                        {/* <Link {...linkProps}> */}
+                        {data.title}
+                        {/* </Link> */}
+                    </Text>
+                    <Text fz={"14px"} color="white" w={'180px'} truncate>
+                        {data.description}
+                    </Text>
+                    <Text fz={"14px"} inline color='white' w={'180px'} truncate>
                         {data.author.name}
                     </Text>
-                </Center>
-
-                <Group spacing={8} mr={0}>
-                    <ActionIcon className={classes.action}>
-                        <IconHeart size="1rem" color={theme.colors.red[6]} />
-                    </ActionIcon>
-                    <ActionIcon className={classes.action}>
-                        <IconBookmark size="1rem" color={theme.colors.yellow[7]} />
-                    </ActionIcon>
-                    <ActionIcon className={classes.action}>
-                        <IconShare size="1rem" />
-                    </ActionIcon>
                 </Group>
-            </Group>
+
+
+                <Group position="apart" className={classes.footer}>
+                    {/* <Center> */}
+                    <Avatar src={data.author.image} size={85} radius={50} />
+                    {/* </Center> */}
+
+
+                </Group>
+            </Card.Section>
+
+            <Card.Section>
+                <Space h={140} />
+
+            </Card.Section>
+            <Card.Section h={'45px'} sx={{ display: "flex", borderTop: '2px solid #dadce0', padding: '0px 0 0px 0', alignItems: 'center', minWidth: '250px', justifyContent: 'flex-end' }}>
+                <Flex className={classes.action} h={'45px'} w={'45px'} >
+                    <IconFolder size="25px" />
+                </Flex>
+                <Flex className={classes.action} h={'45px'} w={'45px'}>
+                    <IconPresentation size="25px" />
+                </Flex>
+            </Card.Section>
         </Card >
     );
 }
