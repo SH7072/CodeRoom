@@ -110,7 +110,7 @@ const ClassroomNavbar = ({ }) => {
     return (
         <>
             {/* {opened && <ClassroomSidebar />} */}
-            <Header height={56} className={classes.header}>
+            <Header height={'8vh'} className={classes.header}>
                 <div className={classes.inner}>
                     <Group>
                         <Burger opened={opened} onClick={toggle} size="sm" />

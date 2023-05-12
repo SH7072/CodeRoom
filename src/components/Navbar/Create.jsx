@@ -3,7 +3,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { forwardRef } from "react";
 
 
-const CreateButton = forwardRef(({ ...others }: props, ref) => {
+const CreateButton = forwardRef(({ ...others }, ref) => {
     return (
         <>
             <UnstyledButton

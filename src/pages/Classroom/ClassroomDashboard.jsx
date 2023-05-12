@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, Flex } from '@mantine/core';
-import { Link } from 'react-router-dom';
-import Class from './Class/Class';
+import { Flex } from '@mantine/core';
+import Class from '../../components/Class/Class';
 
 const ClassroomDashboard = () => {
     return (

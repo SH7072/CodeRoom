@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createStyles, Navbar, Group, Code, getStylesRef, rem, Title, Divider, Flex, Text } from '@mantine/core';
+import { createStyles, getStylesRef, rem, Flex } from '@mantine/core';
 import {
     IconBellRinging,
     IconFingerprint,

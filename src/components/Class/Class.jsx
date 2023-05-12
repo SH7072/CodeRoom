@@ -1,23 +1,18 @@
-import { IconBookmark, IconDotsVertical, IconFolder, IconHeart, IconPresentation, IconShare } from '@tabler/icons-react';
+import { IconDotsVertical, IconFolder, IconPresentation } from '@tabler/icons-react';
 import {
     Card,
     Image,
     Text,
-    ActionIcon,
-    Badge,
     Group,
-    Center,
     Avatar,
     createStyles,
     rem,
     Menu,
     UnstyledButton,
-    Button,
     Space,
     Flex,
 } from '@mantine/core';
 import { forwardRef } from 'react';
-import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     card: {

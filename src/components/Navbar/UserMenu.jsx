@@ -1,5 +1,4 @@
 import {
-    IconChevronRight,
     IconLogout,
     IconHeart,
     IconStar,
@@ -8,9 +7,8 @@ import {
     IconPlayerPause,
     IconTrash,
     IconSwitchHorizontal,
-    IconChevronDown,
 } from '@tabler/icons-react';
-import { Group, Avatar, Text, Menu, UnstyledButton, createStyles } from '@mantine/core';
+import { Group, Avatar, Menu, UnstyledButton, createStyles } from '@mantine/core';
 import { forwardRef } from 'react';
 
 

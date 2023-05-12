@@ -4,16 +4,14 @@ import {
   createBrowserRouter,
   RouterProvider,
   Route,
-  Link,
   createRoutesFromElements,
   Outlet,
-  Routes,
 } from "react-router-dom";
-import Signup from "./components/Signup"
-import Login from "./components/Login"
-import Editorpage from './components/Editorpage';
+import Signup from "./pages/Signup/Signup"
+import Login from "./pages/Login/Login"
 import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
-import ClassroomDashboard from './components/ClassroomDashboard';
+import ClassroomDashboard from './pages/Classroom/ClassroomDashboard';
+
 
 
 // const router = createBrowserRouter([
@@ -39,8 +37,7 @@ const router = createBrowserRouter(
       <Route index element={<ClassroomDashboard />} />
       <Route path="signup" element={<Signup />} />
       <Route path="login" element={<Login />} />
-      <Route path="Editorpage" element={<Editorpage />} />
-      <Route path='interview' element={<Root />}>
+      <Route path='classroom' element={<InnerRoot />}>
         <Route index element={<ClassroomDashboard />} />
         <Route path='login' element={<Login />} />
         <Route path='new' element={<Signup />} />
@@ -66,6 +63,22 @@ function App() {
 }
 
 function Root() {
+  return (
+    <div>
+      {/* <h1>Root</h1>
+      <ul>
+        <li>
+          <Link to="/signup">Signup</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      </ul> */}
+      <Outlet />
+    </div>
+  );
+}
+function InnerRoot() {
   return (
     <div>
       {/* <h1>Root</h1>
