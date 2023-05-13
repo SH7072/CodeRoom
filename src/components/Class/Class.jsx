@@ -125,6 +125,7 @@ const Class = () => {
     const linkProps = { href: data.link, target: '_blank', rel: 'noopener noreferrer' };
 
     return (
+
         <Card withBorder radius="md" className={classes.card}>
             <Card.Section sx={{ display: "flex", flexDirection: 'column' }} >
                 {/* <a {...linkProps}> */}
@@ -184,6 +185,8 @@ const Class = () => {
                 </Flex>
             </Card.Section>
         </Card >
+
+
     );
 }
 

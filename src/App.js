@@ -3,14 +3,17 @@ import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
+  Link,
   Route,
   createRoutesFromElements,
-  Outlet,
+  Outlet,,
+  Routes
 } from "react-router-dom";
 import Signup from "./pages/Signup/Signup"
 import Login from "./pages/Login/Login"
 import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
 import ClassroomDashboard from './pages/Classroom/ClassroomDashboard';
+import Stream from './components/Class/Stream/Stream';
 
 
 
@@ -37,6 +40,7 @@ const router = createBrowserRouter(
       <Route index element={<ClassroomDashboard />} />
       <Route path="signup" element={<Signup />} />
       <Route path="login" element={<Login />} />
+      <Route path="stream" element={<Stream />} />
       <Route path='classroom' element={<InnerRoot />}>
         <Route index element={<ClassroomDashboard />} />
         <Route path='login' element={<Login />} />
