@@ -1,11 +1,13 @@
 const myvar = process.env.REACT_APP_BACKEND_URL;
 console.log(myvar, "REACT_APP_BACKEND_URL");
 
+const dob = new Date();
+
 export const login = (email, password) => async dispatch => {
     try {
         dispatch({ type: 'loginRequest' });
 
-        const res = await fetch(`http://localhost:4000/api/auth/login`, {
+        const res = await fetch(`http://localhost:4000/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -15,13 +17,15 @@ export const login = (email, password) => async dispatch => {
 
         const data = await res.json();
 
+        console.log(data, "data");
+
         if (data.error) {
-            return dispatch({
+            dispatch({
                 type: 'loginFail',
                 payload: data.error
             });
         }
-        if (data.status === 200) {
+        if (data.status === 201) {
             dispatch({
                 type: 'loginSuccess',
                 payload: data
@@ -41,12 +45,12 @@ export const register = (name, email, password) => async dispatch => {
 
         console.log(name, email, password, "name, email, password");
 
-        const res = await fetch(`http://localhost:4000/api/auth/register`, {
+        const res = await fetch(`http://localhost:4000/user/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ name, email, password })
+            body: JSON.stringify({ name, email, password, dob })
         });
 
         const data = await res.json();
@@ -57,7 +61,7 @@ export const register = (name, email, password) => async dispatch => {
                 payload: data.error
             });
         }
-        if (data.status === 200) {
+        if (data.status === 201) {
             dispatch({
                 type: 'registerSuccess',
                 payload: data
