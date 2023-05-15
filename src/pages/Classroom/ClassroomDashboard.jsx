@@ -2,7 +2,9 @@ import React from 'react';
 import { Flex } from '@mantine/core';
 import Class from '../../components/Class/Class';
 
-const ClassroomDashboard = () => {
+const ClassroomDashboard = ({ user }) => {
+
+    console.log(user, 'user');
     return (
         <>
             <Flex wrap={'wrap'}>

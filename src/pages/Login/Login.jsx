@@ -2,7 +2,7 @@ import { ActionIcon, Button, Flex, Input, Paper, PasswordInput, Text, Title, cre
 import { IconAt, IconBrandFacebook, IconBrandGoogle, IconBrandTwitter } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../redux/actions/user';
 
 const useStyles = createStyles((theme) => ({
@@ -40,9 +40,10 @@ const useStyles = createStyles((theme) => ({
 // ];
 
 
-const Signup = () => {
+const Login = () => {
     const { classes } = useStyles();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -75,12 +76,12 @@ const Signup = () => {
         return isFormValid;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (handleValidation()) {
             console.log(email, password);
-            dispatch(login(email, password));
+            dispatch(login(email, password, navigate));
         }
     };
 
@@ -142,4 +143,4 @@ const Signup = () => {
 
     )
 }
-export default Signup;
+export default Login;

@@ -1,35 +1,38 @@
-const myvar = process.env.REACT_APP_BACKEND_URL;
-console.log(myvar, "REACT_APP_BACKEND_URL");
-
 const dob = new Date();
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password, navigate) => async dispatch => {
     try {
         dispatch({ type: 'loginRequest' });
 
-        const res = await fetch(`http://localhost:4000/user/login`, {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ email, password })
         });
-
+        const status = res.status;
         const data = await res.json();
 
         console.log(data, "data");
+        // console.log(status, "status");
+        // console.log(status.OK, "status.OK");
+        // console.log('wjkdbwjdbj');
 
-        if (data.error) {
+        if (status !== 200) {
             dispatch({
                 type: 'loginFail',
                 payload: data.error
             });
         }
-        if (data.status === 201) {
+        if (status === 200) {
             dispatch({
                 type: 'loginSuccess',
                 payload: data
             });
+            navigate('/classroom');
+
+
         }
     } catch (error) {
         dispatch({
@@ -77,3 +80,33 @@ export const register = (name, email, password) => async dispatch => {
         });
     }
 }
+
+
+export const loadUser = ({ token }) => async dispatch => {
+    try {
+        dispatch({ type: 'loadUserRequest' });
+
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/me`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await res.json();
+
+        if (res.status !== 200) {
+            return dispatch({
+                type: 'loadUserFail', payload: data.error
+            });
+        }
+
+        if (res.status === 200)
+            return dispatch({
+                type: 'loadUserSuccess', payload: data.user
+            });
+    } catch (error) {
+        dispatch({ type: 'loadUserFail', payload: error });
+    }
+};

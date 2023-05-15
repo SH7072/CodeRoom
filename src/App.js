@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {
   createBrowserRouter,
@@ -6,7 +6,7 @@ import {
   Link,
   Route,
   createRoutesFromElements,
-  Outlet,,
+  Outlet,
   Routes
 } from "react-router-dom";
 import Signup from "./pages/Signup/Signup"
@@ -14,91 +14,68 @@ import Login from "./pages/Login/Login"
 import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
 import ClassroomDashboard from './pages/Classroom/ClassroomDashboard';
 import Stream from './components/Class/Stream/Stream';
+import HomeLayout from './components/Layout/HomeLayout';
+import Root from './components/Layout/Root';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUser } from './redux/actions/user';
 
 
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <ClassroomDashboard />,
-//   }, {
-// path: "signup",
-//     element: <Signup />,
-//   }, {
-//     path: "login",
-//     element: <Login />,
-//   }, {
-//     path: "Editorpage",
-//     element: <Editorpage />,
-//   }
 
-// ])
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Root />}>
-      <Route index element={<ClassroomDashboard />} />
-      <Route path="signup" element={<Signup />} />
-      <Route path="login" element={<Login />} />
-      <Route path="stream" element={<Stream />} />
-      <Route path='classroom' element={<InnerRoot />}>
-        <Route index element={<ClassroomDashboard />} />
-        <Route path='login' element={<Login />} />
-        <Route path='new' element={<Signup />} />
-      </Route>
-    </Route>
-  ));
 
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route path="/" element={<Root />}>
-//       <Route path="signup" element={<Signup />} />
-//       <Route path="login" element={<Login />} />
-//     </Route>
-//   )
-// );
+
+
+
 
 function App() {
-  return (
 
+  const { loading, isAuthenticated, token, user, message, error } = useSelector(state => state.user);
+
+  console.log(isAuthenticated, loading, token, user, message, error);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (error) {
+      // toast.error(error);
+      dispatch({ type: 'clearError' });
+    }
+
+    if (message) {
+      // toast.success(message);
+      dispatch({ type: 'clearMessage' });
+    }
+  }, [dispatch, error, message]);
+
+  // useEffect(() => {
+  //   if (!token) return;
+  //   dispatch(loadUser(token));
+  // }, [dispatch]);
+
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Root />}>
+        <Route index element={<ClassroomDashboard />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<Login />} />
+        <Route path="stream" element={<Stream />} />
+        <Route path='classroom' element={<HomeLayout user={user} />}>
+          <Route index element={<ClassroomDashboard user={user} />} />
+          <Route path='login' element={<Login />} />
+          <Route path='new' element={<Signup />} />
+        </Route>
+      </Route>
+    ));
+
+
+
+
+
+
+  return (
     <RouterProvider router={router} />
-
   );
 }
-
-function Root() {
-  return (
-    <div>
-      {/* <h1>Root</h1>
-      <ul>
-        <li>
-          <Link to="/signup">Signup</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-      </ul> */}
-      <Outlet />
-    </div>
-  );
-}
-function InnerRoot() {
-  return (
-    <div>
-      {/* <h1>Root</h1>
-      <ul>
-        <li>
-          <Link to="/signup">Signup</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-      </ul> */}
-      <ClassroomNavbar />
-      <Outlet />
-    </div>
-  );
-}
-
 
 export default App;

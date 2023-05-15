@@ -9,8 +9,8 @@ const userReducer = createReducer({
     loginSuccess: (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.user = action.payload.user;
-        // state.token = action.payload.token;
+        state.user = action.payload.userId;
+        state.token = action.payload.token;
         state.message = action.payload.message;
     },
     loginFail: (state, action) => {
@@ -32,6 +32,25 @@ const userReducer = createReducer({
         state.loading = false;
         state.isAuthenticated = false;
         state.error = action.payload;
+    },
+    loadUserRequest: state => {
+        state.loading = true;
+    },
+    loadUserSuccess: (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload;
+    },
+    loadUserFail: (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = false;
+        state.error = action.payload;
+    },
+    clearError: state => {
+        state.error = null;
+    },
+    clearMessage: state => {
+        state.message = null;
     },
 
 
