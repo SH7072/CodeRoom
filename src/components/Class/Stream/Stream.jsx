@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
         marginRight: "0rem"
     },
     classCode: {
-        height: "5rem",
+
         border: "1px solid gray",
         borderRadius: "8px",
         padding: "0.5rem",
@@ -53,9 +53,7 @@ const useStyles = createStyles((theme) => ({
         top: "-16%"
     },
     viewAll_button: {
-        position: "relative",
-        right: "-45%",
-        bottom: "0%",
+
         backgroundColor: "#DFFFD8",
         color: "green",
         '&:hover': {
@@ -140,14 +138,16 @@ const Stream = () => {
                         </Flex>
 
                         {/* <BsThreeDotsVertical className={classes.verticalDots} /> */}
-                        <p style={{ fontSize: "2rem", margin: "0px", color: "green" }}>2pEjuKl</p>
+                        <h3 style={{ margin: "0px", marginTop: "1rem", color: "green", fontSize: "20px" }}>2pEjuKl</h3>
                     </div>
                     <div className={classes.upcoming}>
                         <p style={{ margin: '0px', marginBottom: '1rem' }}>Upcoming</p>
 
                         <h5 style={{ margin: '0px', color: 'gray', marginBottom: "1rem" }}>No work due in soon</h5>
+                        <Flex style={{ flexDirection: "column", alignItems: "flex-end" }}>
+                            <Button className={classes.viewAll_button}>View All</Button>
+                        </Flex>
 
-                        <Button className={classes.viewAll_button}>View All</Button>
                     </div>
                 </Flex>
 
@@ -161,9 +161,9 @@ const Stream = () => {
                     <AnnouncedCard></AnnouncedCard>
 
                 </Flex>
-            </Flex>
+            </Flex >
 
-        </div>
+        </div >
 
     </>
 }

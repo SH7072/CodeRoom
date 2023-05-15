@@ -6,7 +6,7 @@ import {
   Link,
   Route,
   createRoutesFromElements,
-  Outlet,,
+  Outlet,
   Routes
 } from "react-router-dom";
 import Signup from "./pages/Signup/Signup"

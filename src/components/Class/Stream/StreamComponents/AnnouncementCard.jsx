@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     },
     select_button: {
         marginLeft: "1rem",
-        width: "20%",
+        // width: "20%",
         marginBottom: "1rem",
         border: "1px solid gray",
         borderRadius: "5px",
