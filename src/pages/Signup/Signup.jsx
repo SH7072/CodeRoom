@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Checkbox, Flex, Input, Paper, PasswordInput, Text, Title, createStyles } from '@mantine/core';
+import { ActionIcon, Button, Checkbox, Flex, Input, MediaQuery, Paper, PasswordInput, Text, Title, createStyles } from '@mantine/core';
 import { IconAt, IconBrandFacebook, IconBrandGoogle, IconBrandTwitter } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import PasswordInputCustom from './PasswordInputCustom';
@@ -138,16 +138,15 @@ const Signup = () => {
 
     };
 
-
     return (
         <>
             <Paper sx={classes.body}>
-                <Title order={1} align={'center'} sx={classes.logo}>CodeRun</Title>
+                <Title order={1} align={'center'} sx={classes.logo}>CodeRoom</Title>
                 <Flex w={'50%'} h={'100%'} justify={'center'} align={'center'}>
                     <img src="./login.png" alt="login" width="90%" height="90%" />
                 </Flex>
                 <Flex w={'50%'} h={'100%'} justify={'center'} align={'center'} >
-                    <Paper w={'60%'} p={10}>
+                    < Paper p={10} miw={'60%'} maw={'60%'} w={'60%'}>
                         <Title order={1} align={'center'}>Create an account</Title>
                         <Text c="dimmed" align={'center'}>Enter your details below.</Text>
                         <Flex justify={'center'} align={'center'}>
