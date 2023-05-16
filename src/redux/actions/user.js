@@ -30,9 +30,8 @@ export const login = (email, password, navigate) => async dispatch => {
                 type: 'loginSuccess',
                 payload: data
             });
+            localStorage.setItem('token', data.token);
             navigate('/classroom');
-
-
         }
     } catch (error) {
         dispatch({
@@ -86,7 +85,7 @@ export const loadUser = ({ token }) => async dispatch => {
     try {
         dispatch({ type: 'loadUserRequest' });
 
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/me`, {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getUserInfo`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

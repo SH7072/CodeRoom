@@ -47,10 +47,12 @@ function App() {
     }
   }, [dispatch, error, message]);
 
-  // useEffect(() => {
-  //   if (!token) return;
-  //   dispatch(loadUser(token));
-  // }, [dispatch]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(loadUser(token));
+    }
+  }, [dispatch]);
 
 
   const router = createBrowserRouter(
