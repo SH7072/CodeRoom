@@ -18,6 +18,7 @@ import HomeLayout from './components/Layout/HomeLayout';
 import Root from './components/Layout/Root';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './redux/actions/user';
+import ClassLayout from './components/Layout/ClassLayout';
 
 
 
@@ -62,9 +63,14 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
         <Route path="stream" element={<Stream />} />
-        <Route path='classroom' element={<HomeLayout user={user} />}>
-          <Route index element={<ClassroomDashboard user={user} />} />
-          <Route path='login' element={<Login />} />
+        <Route path='classroom' element={<HomeLayout />}>
+          <Route index element={<ClassroomDashboard />} />
+          {/* <Route path='class/:id' element={<Stream />} /> */}
+          <Route path='new' element={<Signup />} />
+        </Route>
+        <Route path='class' element={<ClassLayout />}>
+          {/* <Route index element={<ClassroomDashboard />} /> */}
+          <Route path=':id' element={<Stream />} />
           <Route path='new' element={<Signup />} />
         </Route>
       </Route>

@@ -3,9 +3,9 @@ import { Flex } from '@mantine/core';
 import Class from '../../components/Class/Class';
 import { DateInput, DatePickerInput } from '@mantine/dates';
 
-const ClassroomDashboard = ({ user }) => {
+const ClassroomDashboard = () => {
 
-    console.log(user, 'user');
+    // console.log(user, 'user');
     const [value, setValue] = useState(null);
     return (
         <>
