@@ -6,6 +6,7 @@ import UserMenu from './UserMenu';
 import Create from './Create';
 import ClassSettings from './ClassSetting';
 import ClassSetting from './ClassSetting';
+import { useNavigate, useParams } from 'react-router-dom';
 // import { MantineLogo } from '@mantine/ds';
 
 
@@ -108,6 +109,8 @@ const useStyles = createStyles((theme) => ({
 const ClassNavbar = () => {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
+    const navigate = useNavigate();
+    const { tabValue } = useParams();
 
 
     const items = ['Stream', 'Classwork', 'People'].map((tab) => (
@@ -140,7 +143,10 @@ const ClassNavbar = () => {
                     </Group>
 
                     <Flex h={'100%'}>
-                        <Tabs defaultValue="stream"
+                        <Tabs
+                            defaultValue="stream"
+                            value={tabValue}
+                            onTabChange={(value) => navigate(`${value}`)}
                             // variant="outline"
                             classNames={{
                                 root: classes.tabs,

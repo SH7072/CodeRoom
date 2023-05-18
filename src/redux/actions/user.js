@@ -41,7 +41,7 @@ export const login = (email, password, navigate) => async dispatch => {
     }
 }
 
-export const register = (name, email, password) => async dispatch => {
+export const register = (name, email, password, navigate) => async dispatch => {
     try {
         dispatch({ type: 'registerRequest' });
 
@@ -52,7 +52,7 @@ export const register = (name, email, password) => async dispatch => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ name, email, password, dob })
+            body: JSON.stringify({ name, email, password })
         });
 
         const data = await res.json();
@@ -63,11 +63,12 @@ export const register = (name, email, password) => async dispatch => {
                 payload: data.error
             });
         }
-        if (data.status === 201) {
+        if (res.status === 200) {
             dispatch({
                 type: 'registerSuccess',
                 payload: data
             });
+            navigate('/login');
         }
     } catch (error) {
 
@@ -81,19 +82,19 @@ export const register = (name, email, password) => async dispatch => {
 }
 
 
-export const loadUser = ({ token }) => async dispatch => {
+export const loadUser = () => async dispatch => {
     try {
         dispatch({ type: 'loadUserRequest' });
 
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getUserInfo`, {
             method: "GET",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
             }
         });
 
         const data = await res.json();
+        console.log(data, 'from loadUser');
 
         if (res.status !== 200) {
             return dispatch({

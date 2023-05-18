@@ -14,6 +14,8 @@ import {
 } from '@mantine/core';
 import { forwardRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loadClass } from '../../redux/actions/class';
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -119,10 +121,11 @@ const Options = forwardRef(({ ...others }, ref) => {
 });
 
 
-const Class = () => {
+const Class = ({ classInfo }) => {
     const { classes, cx, theme } = useStyles();
     // const linkProps = { href: data.link };
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleClick = () => {
         navigate('/class/1');
     }
@@ -152,7 +155,7 @@ const Class = () => {
                 </Menu>
 
                 <Group className={classes.title}>
-                    <Link to={'/class/1'}>
+                    <Link to={`/class/${classInfo.classId}/stream`} onClick={() => dispatch(loadClass(classInfo.classId))}>
                         <Text fw={400} fz={"20px"} color='black' truncate>
                             {data.title}
                         </Text>

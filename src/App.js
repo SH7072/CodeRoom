@@ -49,29 +49,23 @@ function App() {
   }, [dispatch, error, message]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(loadUser(token));
-    }
+    dispatch(loadUser());
   }, [dispatch]);
 
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
-        <Route index element={<ClassroomDashboard />} />
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
         <Route path="stream" element={<Stream />} />
         <Route path='classroom' element={<HomeLayout />}>
           <Route index element={<ClassroomDashboard />} />
-          {/* <Route path='class/:id' element={<Stream />} /> */}
-          <Route path='new' element={<Signup />} />
         </Route>
-        <Route path='class' element={<ClassLayout />}>
-          {/* <Route index element={<ClassroomDashboard />} /> */}
-          <Route path=':id' element={<Stream />} />
-          <Route path='new' element={<Signup />} />
+        <Route path='class/:id' element={<ClassLayout />}>
+          <Route path='stream' element={<Stream />} />
+          <Route path='classwork' element={<Stream />} />
+          <Route path='people' element={<Stream />} />
         </Route>
       </Route>
     ));
