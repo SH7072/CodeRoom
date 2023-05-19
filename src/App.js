@@ -14,6 +14,7 @@ import Login from "./pages/Login/Login"
 import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
 import ClassroomDashboard from './pages/Classroom/ClassroomDashboard';
 import Stream from './components/Class/Stream/Stream';
+import Classwork from './components/Class/Classwork/Classwork';
 import HomeLayout from './components/Layout/HomeLayout';
 import Root from './components/Layout/Root';
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,6 +63,7 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
         <Route path="stream" element={<Stream />} />
+        <Route path="classwork" element={<Classwork />} />
         <Route path='classroom' element={<HomeLayout user={user} />}>
           <Route index element={<ClassroomDashboard user={user} />} />
           <Route path='login' element={<Login />} />
