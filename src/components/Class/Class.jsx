@@ -13,13 +13,16 @@ import {
     Flex,
 } from '@mantine/core';
 import { forwardRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loadClass } from '../../redux/actions/class';
 
 const useStyles = createStyles((theme) => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
         // alignItems: 'flex-end',
-        // position: 'relative',
+        position: 'relative',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         margin: '15px',
         width: '300px',
@@ -43,7 +46,6 @@ const useStyles = createStyles((theme) => ({
         position: 'absolute',
         top: theme.spacing.xs,
         left: rem(12),
-        pointerEvents: 'none',
         width: '250px',
     },
 
@@ -54,7 +56,6 @@ const useStyles = createStyles((theme) => ({
         position: 'absolute',
         top: rem(12),
         left: rem(12),
-        pointerEvents: 'none',
     },
 
 
@@ -91,7 +92,7 @@ const data = {
     }
 }
 
-const Options = forwardRef(({ ...others }: props, ref) => {
+const Options = forwardRef(({ ...others }, ref) => {
     return (
         <>
             <UnstyledButton
@@ -120,9 +121,14 @@ const Options = forwardRef(({ ...others }: props, ref) => {
 });
 
 
-const Class = () => {
+const Class = ({ classInfo }) => {
     const { classes, cx, theme } = useStyles();
-    const linkProps = { href: data.link, target: '_blank', rel: 'noopener noreferrer' };
+    // const linkProps = { href: data.link };
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const handleClick = () => {
+        navigate('/class/1');
+    }
 
     return (
 
@@ -149,11 +155,12 @@ const Class = () => {
                 </Menu>
 
                 <Group className={classes.title}>
-                    <Text fw={400} fz={"20px"} color='white' truncate>
-                        {/* <Link {...linkProps}> */}
-                        {data.title}
-                        {/* </Link> */}
-                    </Text>
+                    <Link to={`/class/${classInfo.classId}/stream`} onClick={() => dispatch(loadClass(classInfo.classId))}>
+                        <Text fw={400} fz={"20px"} color='black' truncate>
+                            {data.title}
+                        </Text>
+                    </Link>
+                    {/* </Link> */}
                     <Text fz={"14px"} color="white" w={'180px'} truncate>
                         {data.description}
                     </Text>
@@ -162,19 +169,13 @@ const Class = () => {
                     </Text>
                 </Group>
 
-
                 <Group position="apart" className={classes.footer}>
-                    {/* <Center> */}
                     <Avatar src={data.author.image} size={85} radius={50} />
-                    {/* </Center> */}
-
-
                 </Group>
-            </Card.Section>
+            </Card.Section >
 
             <Card.Section>
                 <Space h={140} />
-
             </Card.Section>
             <Card.Section h={'45px'} sx={{ display: "flex", borderTop: '2px solid #dadce0', padding: '0px 0 0px 0', alignItems: 'center', minWidth: '250px', justifyContent: 'flex-end' }}>
                 <Flex className={classes.action} h={'45px'} w={'45px'} >

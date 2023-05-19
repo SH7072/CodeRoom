@@ -13,6 +13,7 @@ import {
     IconHome,
     IconSourceCode,
 } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = createStyles((theme) => ({
@@ -93,9 +94,9 @@ const ClassroomSidebar = () => {
     const [active, setActive] = useState('Billing');
 
     const links = data.map((item) => (
-        <a
+        <Link
             className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-            href={item.link}
+            to={item.link}
             key={item.label}
             onClick={(event) => {
                 event.preventDefault();
@@ -104,7 +105,7 @@ const ClassroomSidebar = () => {
         >
             <item.icon className={classes.linkIcon} stroke={1.5} />
             <span>{item.label}</span>
-        </a>
+        </Link>
     ));
 
     return (
@@ -114,14 +115,14 @@ const ClassroomSidebar = () => {
                 {/* <Group position="apart"> */}
                 <Flex direction={'column'}>
                     <Flex direction='column' className={classes.header} >
-                        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                        <Link to={'/classroom'} className={classes.link}>
                             <IconHome className={classes.linkIcon} stroke={1.5} />
                             <span>Classes</span>
-                        </a>
-                        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                        </Link>
+                        {/* <Link> href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                             <IconSourceCode className={classes.linkIcon} stroke={1.5} />
                             <span>Code Editor</span>
-                        </a>
+                        </Link> */}
                     </Flex>
 
                     <Flex direction='column'>
@@ -131,15 +132,15 @@ const ClassroomSidebar = () => {
 
 
                 <Flex direction='column' className={classes.footer}>
-                    <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                    {/* <Link> href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                         <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
                         <span>Change account</span>
-                    </a>
+                    </Link>
 
-                    <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                    <Link> href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                         <IconLogout className={classes.linkIcon} stroke={1.5} />
                         <span>Logout</span>
-                    </a>
+                    </Link> */}
                 </Flex>
             </Flex>
         </>

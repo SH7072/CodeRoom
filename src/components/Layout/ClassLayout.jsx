@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
-import ClassroomNavbar from "../Navbar/ClassroomNavbar";
+import ClassNavbar from "../Navbar/ClassNavbar";
 
-const HomeLayout = () => {
+
+const ClassLayout = () => {
     return (
         <>
             <div>
-                <ClassroomNavbar />
+                <ClassNavbar />
                 <Outlet />
             </div>
         </>
     );
 }
 
-export default HomeLayout;
+export default ClassLayout;

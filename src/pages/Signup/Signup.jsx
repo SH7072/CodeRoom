@@ -2,7 +2,7 @@ import { ActionIcon, Button, Checkbox, Flex, Input, MediaQuery, Paper, PasswordI
 import { IconAt, IconBrandFacebook, IconBrandGoogle, IconBrandTwitter } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import PasswordInputCustom from './PasswordInputCustom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/actions/user';
 
@@ -45,6 +45,7 @@ const requirements = [
 const Signup = () => {
     const { classes } = useStyles();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -133,7 +134,7 @@ const Signup = () => {
         if (handleValidation()) {
             console.log(firstName, lastName, email, password, confirmPassword, checked);
             const name = firstName + ' ' + lastName;
-            dispatch(register(name, email, password));
+            dispatch(register(name, email, password, navigate));
         }
 
     };
