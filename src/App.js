@@ -63,8 +63,8 @@ function App() {
         <Route path='classroom' element={<HomeLayout />}>
           <Route index element={<ClassroomDashboard />} />
         </Route>
-        <Route path='class/:id' element={<ClassLayout />}>
-          <Route path='stream' element={<Stream />} />
+        <Route path='class/:id/' element={<ClassLayout />}>
+          <Route exact path='stream' element={<Stream />} />
           <Route path='classwork' element={<Classwork />} />
           <Route path='people' element={<Stream />} />
         </Route>

@@ -11,7 +11,7 @@ const ClassroomDashboard = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllClassRooms());
-    }, []);
+    }, [dispatch]);
 
     const { user } = useSelector(state => state.user);
     const { classes } = useSelector(state => state.classes);

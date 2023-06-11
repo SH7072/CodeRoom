@@ -2,7 +2,7 @@ import { Button, Container, Flex, Input, Menu, Modal, Text, UnstyledButton, crea
 import { useFocusWithin } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { forwardRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createClass, joinClass } from "../../redux/actions/class";
 import { useNavigate } from "react-router-dom";
 
@@ -56,12 +56,33 @@ const Create = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const { classInfo } = useSelector(state => state.classes);
 
-    const handleCreateClass = () => {
-        dispatch(createClass(className, section, subject, navigate));
+    const handleCreateClass = async () => {
+        await dispatch(createClass(className, section, subject, navigate));
+
+        navigate(`/class/${classInfo.id}`);
+
+        handleCreateClose();
+
+
+
+
+
+    }
+    const handleCreateClose = () => {
+        setCreateClassOpen(false);
+        setClassName("");
+        setSection("");
+        setSubject("");
     }
     const handleJoinClass = () => {
         dispatch(joinClass(classCode, navigate));
+        handleJoinClose();
+    }
+    const handleJoinClose = () => {
+        setJoinClassOpen(false);
+        setClassCode("");
     }
 
     return (
@@ -97,7 +118,7 @@ const Create = () => {
 
             </Menu>
 
-            <Modal opened={createClassOpen} onClose={() => setCreateClassOpen(false)} title="Create Class" centered radius={'lg'} size={'520px'}>
+            <Modal opened={createClassOpen} onClose={handleCreateClose} title="Create Class" centered radius={'lg'} size={'520px'}>
                 <Container fluid={true} m={0} p={0}>
                     <Input.Wrapper label="Classname" required>
                         <Input
@@ -125,7 +146,7 @@ const Create = () => {
                         />
                     </Input.Wrapper>
                     <Flex justify={'flex-end'} gap={'10px'} mt={'20px'}>
-                        <Button variant="subtle" color="gray">
+                        <Button variant="subtle" color="gray" onClick={handleCreateClose}>
                             Cancel
                         </Button>
                         {className.length > 0 ?
@@ -143,7 +164,7 @@ const Create = () => {
 
             </Modal >
 
-            <Modal opened={joinClassOpen} onClose={() => setJoinClassOpen(false)} title="Join Class" centered radius={'lg'} size={'520px'}>
+            <Modal opened={joinClassOpen} onClose={handleJoinClose} title="Join Class" centered radius={'lg'} size={'520px'}>
                 <Container fluid={true} m={0} p={0}>
                     <Input.Wrapper label="Class Code" size="md">
                         <Text color="dimmed">
@@ -159,7 +180,7 @@ const Create = () => {
                         />
                     </Input.Wrapper>
                     <Flex justify={'flex-end'} gap={'10px'} mt={'20px'}>
-                        <Button variant="subtle" color="gray">
+                        <Button variant="subtle" color="gray" onClick={handleJoinClose}>
                             Cancel
                         </Button>
                         {classCode.length === 6 ?

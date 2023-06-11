@@ -97,12 +97,14 @@ const Stream = () => {
     const params = useParams();
     const dispatch = useDispatch();
 
-    // console.log(params.id);
+    console.log(params.id);
 
     useEffect(() => {
         // console.log("Stream");
         dispatch(loadClass(params.id));
-    }, []);
+    }, [dispatch, params.id]);
+
+    const loading = useSelector((state) => { return state.classes.loading });
 
     const classInfo = useSelector((state) => { return state.classes.classInfo });
     console.log(classInfo, "classInfo");
@@ -110,7 +112,7 @@ const Stream = () => {
 
     return <>
         {
-            classInfo &&
+            !loading && classInfo &&
 
             <div className={classes.main_container}>
                 <DescrioptionCard></DescrioptionCard>
@@ -167,8 +169,6 @@ const Stream = () => {
                             <Button className={classes.viewAll_button}>View All</Button>
                         </div>
                     </Flex>
-
-
                     <Flex style={{ flexDirection: "column" }} className={classes.container2}>
 
                         <AnnouncementCard></AnnouncementCard>
@@ -179,7 +179,6 @@ const Stream = () => {
 
                     </Flex>
                 </Flex>
-
             </div>
         }
 

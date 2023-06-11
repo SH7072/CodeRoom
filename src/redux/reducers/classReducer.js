@@ -8,7 +8,7 @@ const classReducer = createReducer({
     },
     createClassSuccess: (state, action) => {
         state.loading = false;
-        state.class = action.payload.class;
+        state.classInfo = action.payload;
     },
     createClassFail: (state, action) => {
         state.loading = false;

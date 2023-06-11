@@ -22,17 +22,18 @@ export const joinClass = (classCode, navigate) => async dispatch => {
             });
         }
         if (status === 200) {
-            await dispatch({
+            dispatch({
                 type: 'joinClassSuccess',
                 payload: data.class
             });
-            await dispatch({
+            dispatch({
                 type: 'addClassesAsStudent',
                 payload: data.user
             });
             // await dispatch(loadUser());
             // localStorage.setItem('token', data.token);
-            navigate(`/class/${data.class._id}/stream`);
+            // navigate(`/class/${data.class._id}/stream`);
+            navigate('/class/' + data.class._id + '/stream');
         }
     } catch (error) {
         dispatch({
@@ -70,16 +71,17 @@ export const createClass = (className, section, subject, navigate) => async disp
             });
         }
         if (status === 200) {
-            await dispatch({
+            dispatch({
                 type: 'createClassSuccess',
                 payload: data.class
             });
-            await dispatch({
+            dispatch({
                 type: 'addClassesAsTeacher',
                 payload: data.user
             });
             // localStorage.setItem('token', data.token);
-            navigate(`/class/${data.class._id}/stream`);
+            // navigate(`/class/${data.class._id}/stream`);
+            navigate('/class/' + data.class._id + '/stream');
         }
     } catch (error) {
         dispatch({

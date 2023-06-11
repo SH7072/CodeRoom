@@ -7,6 +7,7 @@ import Create from './Create';
 import ClassSettings from './ClassSetting';
 import ClassSetting from './ClassSetting';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { MantineLogo } from '@mantine/ds';
 
 
@@ -112,6 +113,13 @@ const ClassNavbar = () => {
     const navigate = useNavigate();
     const { tabValue } = useParams();
 
+    const loading = useSelector((state) => { return state.classes.loading });
+    const classInfo = useSelector((state) => { return state.classes.classInfo });
+
+
+    const classState = useSelector((state) => state.classes);
+    console.log(classState, 'classState');
+
 
     const items = ['Stream', 'Classwork', 'People'].map((tab) => (
         <Tabs.Tab value={tab} key={tab}>
@@ -121,69 +129,56 @@ const ClassNavbar = () => {
 
     return (
         <>
-            <Header height={'8vh'} className={classes.header}>
-                {/* <div className={classes.inner}> */}
-                <Drawer
-                    opened={opened}
-                    onClose={toggle}
-                    withCloseButton={false}
-                    overlayProps={{ opacity: 0.5, blur: 4 }}
-                    scrollAreaComponent={ScrollArea.Autosize}
-                    size="xs"
-                >
-                    <ClassroomSidebar />
-                </Drawer>
-                {/* <Group position='apart'> */}
-                <div className={classes.inner}>
-                    <Group>
-                        <Burger opened={opened} onClick={toggle} size="sm" />
-                        <Title order={3} style={{ marginLeft: 10 }}>
-                            className
-                        </Title>
-                    </Group>
+            {!loading && classInfo && (
+                <Header height={'8vh'} className={classes.header}>
+                    <Drawer
+                        opened={opened}
+                        onClose={toggle}
+                        withCloseButton={false}
+                        overlayProps={{ opacity: 0.5, blur: 4 }}
+                        scrollAreaComponent={ScrollArea.Autosize}
+                        size="xs"
+                    >
+                        <ClassroomSidebar />
+                    </Drawer>
+                    <div className={classes.inner}>
+                        <Group>
+                            <Burger opened={opened} onClick={toggle} size="sm" />
+                            <Title order={3} style={{ marginLeft: 10 }}>
+                                {classInfo.className}
+                            </Title>
+                        </Group>
 
-                    <Flex h={'100%'}>
-                        <Tabs
-                            defaultValue="stream"
-                            value={tabValue}
-                            onTabChange={(value) => navigate(`${value}`)}
-                            // variant="outline"
-                            classNames={{
-                                root: classes.tabs,
-                                tabsList: classes.tabsList,
-                                tab: classes.tab,
-                                panel: classes.panel,
-                                tabLabel: classes.tabLabel,
-                            }}
-                        >
-                            <Tabs.List position="center">
-                                <Tabs.Tab value="stream">Stream</Tabs.Tab>
-                                <Tabs.Tab value="classwork">Classwork</Tabs.Tab>
-                                <Tabs.Tab value="people">People</Tabs.Tab>
-                            </Tabs.List>
-                        </Tabs>
-                    </Flex>
-                    {/* <Group h={'100%'}>
-                        <Button>
-                            Stream
-                        </Button>
-                        <Button>
-                            Stream
-                        </Button>
-                        <Button>
-                            Stream
-                        </Button>
-                    </Group> */}
+                        <Flex h={'100%'}>
+                            <Tabs
+                                defaultValue="stream"
+                                value={tabValue}
+                                onTabChange={(value) => navigate(`${value}`)}
+                                classNames={{
+                                    root: classes.tabs,
+                                    tabsList: classes.tabsList,
+                                    tab: classes.tab,
+                                    panel: classes.panel,
+                                    tabLabel: classes.tabLabel,
+                                }}
+                            >
+                                <Tabs.List position="center">
+                                    <Tabs.Tab value="stream">Stream</Tabs.Tab>
+                                    <Tabs.Tab value="classwork">Classwork</Tabs.Tab>
+                                    <Tabs.Tab value="people">People</Tabs.Tab>
+                                </Tabs.List>
+                            </Tabs>
+                        </Flex>
 
-
-
-                    <Flex gap={20}>
-                        {/* <Create /> */}
-                        <ClassSetting />
-                        <UserMenu />
-                    </Flex>
-                </div>
-            </Header >
+                        <Flex gap={20}>
+                            {/* <Create /> */}
+                            <ClassSetting />
+                            <UserMenu />
+                        </Flex>
+                    </div>
+                </Header >
+            )
+            }
         </>
     );
 }
