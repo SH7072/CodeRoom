@@ -49,6 +49,10 @@ const useStyles = createStyles((theme) => ({
         width: '250px',
     },
 
+    link: {
+        textDecoration: 'none',
+    },
+
     description: {
         display: 'block',
         // marginTop: theme.spacing.md,
@@ -121,7 +125,7 @@ const Options = forwardRef(({ ...others }, ref) => {
 });
 
 
-const Class = ({ classInfo }) => {
+const Class = ({ classInfo, user }) => {
     const { classes, cx, theme } = useStyles();
     // const linkProps = { href: data.link };
     const navigate = useNavigate();
@@ -130,14 +134,16 @@ const Class = ({ classInfo }) => {
         navigate('/class/1');
     }
 
+    // console.log(classInfo);
+
     return (
 
         <Card withBorder radius="md" className={classes.card}>
             <Card.Section sx={{ display: "flex", flexDirection: 'column' }} >
                 {/* <a {...linkProps}> */}
-                <Image src={data.image} height={110} w={'300px'} zIndex={0} />
+                <Image src={data.image} height={110} w={'300px'} />
                 {/* </a> */}
-                <Menu shadow="md" width={100} sx={classes.options} zIndex={2}>
+                <Menu shadow="md" width={100} sx={classes.options}>
                     <Menu.Target>
                         <Options />
                     </Menu.Target>
@@ -155,17 +161,17 @@ const Class = ({ classInfo }) => {
                 </Menu>
 
                 <Group className={classes.title}>
-                    <Link to={`/class/${classInfo.classId}/stream`} onClick={() => dispatch(loadClass(classInfo.classId))}>
-                        <Text fw={400} fz={"20px"} color='black' truncate>
-                            {data.title}
+                    <Link to={`/class/${classInfo._id}/stream`} className={classes.link}>
+                        <Text fw={500} fz={"20px"} color='white' truncate >
+                            {classInfo.className}
                         </Text>
                     </Link>
                     {/* </Link> */}
                     <Text fz={"14px"} color="white" w={'180px'} truncate>
-                        {data.description}
+                        {classInfo.section}
                     </Text>
                     <Text fz={"14px"} inline color='white' w={'180px'} truncate>
-                        {data.author.name}
+                        {classInfo.classOwner.name}
                     </Text>
                 </Group>
 

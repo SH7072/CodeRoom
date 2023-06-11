@@ -19,12 +19,35 @@ const classReducer = createReducer({
     },
     loadClassSuccess: (state, action) => {
         state.loading = false;
-        state.class = action.payload;
+        state.classInfo = action.payload;
     },
     loadClassFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
     },
+    joinClassRequest: state => {
+        state.loading = true;
+    },
+    joinClassSuccess: (state, action) => {
+        state.loading = false;
+    },
+    joinClassFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    getAllClassRoomsRequest: state => {
+        state.loading = true;
+    },
+    getAllClassRoomsSuccess: (state, action) => {
+        state.loading = false;
+        state.classes = action.payload;
+    },
+    getAllClassRoomsFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+
+
 });
 
 export default classReducer;

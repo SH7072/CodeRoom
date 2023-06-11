@@ -1,9 +1,9 @@
-import { Button, Container, Flex, Input, Menu, Modal, UnstyledButton, createStyles } from "@mantine/core";
+import { Button, Container, Flex, Input, Menu, Modal, Text, UnstyledButton, createStyles } from "@mantine/core";
 import { useFocusWithin } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { forwardRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createClass } from "../../redux/actions/class";
+import { createClass, joinClass } from "../../redux/actions/class";
 import { useNavigate } from "react-router-dom";
 
 
@@ -45,18 +45,24 @@ const Create = () => {
 
     const { classes } = useStyles();
     // const { ref, focused } = useFocusWithin();
-    const [createClassOpen, setcreateClassOpen] = useState(false);
+    const [createClassOpen, setCreateClassOpen] = useState(false);
+    const [joinClassOpen, setJoinClassOpen] = useState(false);
     // const [showLabel, setShowLabel] = useState(false);
     const [className, setClassName] = useState("");
     const [section, setSection] = useState("");
     const [subject, setSubject] = useState("");
+    const [classCode, setClassCode] = useState("");
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = () => {
+
+    const handleCreateClass = () => {
         dispatch(createClass(className, section, subject, navigate));
     }
-
+    const handleJoinClass = () => {
+        dispatch(joinClass(classCode, navigate));
+    }
 
     return (
         <>
@@ -71,12 +77,10 @@ const Create = () => {
                     <CreateButton />
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item
-                    // icon={<IconHeart size="0.9rem" color={theme.colors.red[6]} stroke={1.5} />}
-                    >
+                    <Menu.Item onClick={() => setJoinClassOpen(true)}>
                         Join Class
                     </Menu.Item>
-                    <Menu.Item onClick={() => setcreateClassOpen(true)}>
+                    <Menu.Item onClick={() => setCreateClassOpen(true)}>
                         Create Class
                     </Menu.Item>
                     <Menu.Item
@@ -93,7 +97,7 @@ const Create = () => {
 
             </Menu>
 
-            <Modal opened={createClassOpen} onClose={() => setcreateClassOpen(false)} title="Create Class" centered radius={'lg'} size={'520px'}>
+            <Modal opened={createClassOpen} onClose={() => setCreateClassOpen(false)} title="Create Class" centered radius={'lg'} size={'520px'}>
                 <Container fluid={true} m={0} p={0}>
                     <Input.Wrapper label="Classname" required>
                         <Input
@@ -125,12 +129,46 @@ const Create = () => {
                             Cancel
                         </Button>
                         {className.length > 0 ?
-                            <Button variant="subtle" color="blue" onClick={handleSubmit}>
+                            <Button variant="subtle" color="blue" onClick={handleCreateClass}>
                                 Create
                             </Button>
                             :
                             <Button variant="subtle" color="gray" disabled>
                                 Create
+                            </Button>
+                        }
+
+                    </Flex>
+                </Container>
+
+            </Modal >
+
+            <Modal opened={joinClassOpen} onClose={() => setJoinClassOpen(false)} title="Join Class" centered radius={'lg'} size={'520px'}>
+                <Container fluid={true} m={0} p={0}>
+                    <Input.Wrapper label="Class Code" size="md">
+                        <Text color="dimmed">
+                            Ask your teacher for the class code, then enter it here.
+                        </Text>
+                        <Input
+                            mt={10}
+                            placeholder="Class Code"
+                            value={classCode}
+                            onChange={(e) => setClassCode(e.currentTarget.value)}
+                            maw={200}
+                            size="lg"
+                        />
+                    </Input.Wrapper>
+                    <Flex justify={'flex-end'} gap={'10px'} mt={'20px'}>
+                        <Button variant="subtle" color="gray">
+                            Cancel
+                        </Button>
+                        {classCode.length === 6 ?
+                            <Button variant="subtle" color="blue" onClick={handleJoinClass}>
+                                Join
+                            </Button>
+                            :
+                            <Button variant="subtle" color="gray" disabled>
+                                Join
                             </Button>
                         }
 

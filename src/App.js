@@ -33,7 +33,7 @@ function App() {
 
   const { loading, isAuthenticated, token, user, message, error } = useSelector(state => state.user);
 
-  console.log(isAuthenticated, loading, token, user, message, error);
+  // console.log(isAuthenticated, loading, token, user, message, error);
 
   const dispatch = useDispatch();
   useEffect(() => {

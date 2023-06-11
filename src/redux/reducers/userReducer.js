@@ -54,6 +54,9 @@ const userReducer = createReducer({
 
     addClassesAsTeacher: (state, actions) => {
         state.user = actions.payload;
+    },
+    addClassesAsStudent: (state, actions) => {
+        state.user = actions.payload;
     }
 
 

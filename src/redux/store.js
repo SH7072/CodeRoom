@@ -6,7 +6,7 @@ import classReducer from "./reducers/classReducer";
 const store = configureStore({
     reducer: {
         user: userReducer,
-        class: classReducer,
+        classes: classReducer,
     }
 });
 

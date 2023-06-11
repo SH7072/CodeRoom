@@ -138,7 +138,7 @@ const ClassNavbar = () => {
                     <Group>
                         <Burger opened={opened} onClick={toggle} size="sm" />
                         <Title order={3} style={{ marginLeft: 10 }}>
-                            jkbdbkjdbkd
+                            className
                         </Title>
                     </Group>
 
