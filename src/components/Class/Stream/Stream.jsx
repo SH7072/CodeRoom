@@ -1,6 +1,6 @@
 import { createStyles, Button, Flex, Menu } from "@mantine/core";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useState } from "react";
 
@@ -15,6 +15,9 @@ import DescrioptionCard from "./StreamComponents/DescriptionCard";
 import AnnouncedCard from "./StreamComponents/AnnouncedCard";
 
 import ScheduleAnnouncement from "./StreamComponents/ScheduledAnnouncement";
+import { loadClass } from "../../../redux/actions/class";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const useStyles = createStyles((theme) => ({
     main_container: {
         backgroundColor: 'white',
@@ -93,82 +96,98 @@ const useStyles = createStyles((theme) => ({
 const Stream = () => {
 
     const { classes, theme } = useStyles();
+    const params = useParams();
+    const dispatch = useDispatch();
 
+    console.log(params.id);
+
+    useEffect(() => {
+        // console.log("Stream");
+        dispatch(loadClass(params.id));
+    }, [dispatch, params.id]);
+
+    const loading = useSelector((state) => { return state.classes.loading });
+
+    const classInfo = useSelector((state) => { return state.classes.classInfo });
+    console.log(classInfo, "classInfo");
 
 
     return <>
-        <div className={classes.main_container}>
-            <DescrioptionCard></DescrioptionCard>
+        {
+            !loading && classInfo &&
 
-            <Flex>
-                <Flex style={{ flexDirection: "column" }} className={classes.container1}>
-                    <div className={classes.classCode}>
-                        <Flex style={{ justifyContent: "space-between" }}>
-                            <Flex style={{ alignItems: "center", justifyContent: "center" }}>
-                                <p style={{ margin: '0px' }}>Class Code</p>
+            <div className={classes.main_container}>
+                <DescrioptionCard></DescrioptionCard>
+
+                <Flex>
+                    <Flex style={{ flexDirection: "column" }} className={classes.container1}>
+                        <div className={classes.classCode}>
+                            <Flex style={{ justifyContent: "space-between" }}>
+                                <Flex style={{ alignItems: "center", justifyContent: "center" }}>
+                                    <p style={{ margin: '0px' }}>Class Code</p>
+                                </Flex>
+
+                                <Menu position="right" offset={2} withArrow>
+                                    <Menu.Target>
+                                        <Button radius={"50%"} style={{ backgroundColor: "white", padding: "0px" }}> <BsThreeDotsVertical color={"black"} size={"1rem"} ></BsThreeDotsVertical></Button>
+                                    </Menu.Target>
+                                    <Menu.Dropdown>
+                                        <Menu.Item>
+                                            <Flex>
+                                                <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
+                                                <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
+                                            </Flex>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Flex>
+                                                <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
+                                                <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
+                                            </Flex>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Flex>
+                                                <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
+                                                <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
+                                            </Flex>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Flex>
+                                                <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
+                                                <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
+                                            </Flex>
+                                        </Menu.Item>
+                                    </Menu.Dropdown>
+                                </Menu>
                             </Flex>
 
-                            <Menu position="right" offset={2} withArrow>
-                                <Menu.Target>
-                                    <Button radius={"50%"} style={{ backgroundColor: "white", padding: "0px" }}> <BsThreeDotsVertical color={"black"} size={"1rem"} ></BsThreeDotsVertical></Button>
-                                </Menu.Target>
-                                <Menu.Dropdown>
-                                    <Menu.Item>
-                                        <Flex>
-                                            <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
-                                            <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
-                                        </Flex>
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <Flex>
-                                            <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
-                                            <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
-                                        </Flex>
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <Flex>
-                                            <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
-                                            <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
-                                        </Flex>
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <Flex>
-                                            <Flex className={classes.classcode_icon}><BsLink size={"1.2rem"}></BsLink></Flex>
-                                            <Flex className={classes.classcode_itemtext}>Copy class invite link</Flex>
-                                        </Flex>
-                                    </Menu.Item>
-                                </Menu.Dropdown>
-                            </Menu>
-                        </Flex>
+                            {/* <BsThreeDotsVertical className={classes.verticalDots} /> */}
+                            <h3 style={{ margin: "0px", marginTop: "1rem", color: "green", fontSize: "20px" }}>2pEjuKl</h3>
+                        </div>
+                        <div className={classes.upcoming}>
+                            <p style={{ margin: '0px', marginBottom: '1rem' }}>Upcoming</p>
 
-                        {/* <BsThreeDotsVertical className={classes.verticalDots} /> */}
-                        <h3 style={{ margin: "0px", marginTop: "1rem", color: "green", fontSize: "20px" }}>2pEjuKl</h3>
-                    </div>
-                    <div className={classes.upcoming}>
-                        <p style={{ margin: '0px', marginBottom: '1rem' }}>Upcoming</p>
+                            <h5 style={{ margin: '0px', color: 'gray', marginBottom: "1rem" }}>No work due in soon</h5>
+                            <Flex style={{ flexDirection: "column", alignItems: "flex-end" }}>
+                                <Button className={classes.viewAll_button}>View All</Button>
+                            </Flex>
 
-                        <h5 style={{ margin: '0px', color: 'gray', marginBottom: "1rem" }}>No work due in soon</h5>
-                        <Flex style={{ flexDirection: "column", alignItems: "flex-end" }}>
-                            <Button className={classes.viewAll_button}>View All</Button>
-                        </Flex>
-
-                    </div>
-                </Flex>
+                        </div>
+                    </Flex>
 
 
-                <Flex style={{ flexDirection: "column" }} className={classes.container2}>
+                    <Flex style={{ flexDirection: "column" }} className={classes.container2}>
 
-                    <AnnouncementCard></AnnouncementCard>
-                    <ScheduleAnnouncement></ScheduleAnnouncement>
-                    <AnnouncedCard></AnnouncedCard>
-                    <AnnouncedCard></AnnouncedCard>
-                    <AnnouncedCard></AnnouncedCard>
+                        <AnnouncementCard></AnnouncementCard>
+                        <ScheduleAnnouncement></ScheduleAnnouncement>
+                        <AnnouncedCard></AnnouncedCard>
+                        <AnnouncedCard></AnnouncedCard>
+                        <AnnouncedCard></AnnouncedCard>
 
-                </Flex>
-            </Flex >
+                    </Flex>
+                </Flex >
 
-        </div >
-
+            </div >
+        }
     </>
 }
 

@@ -18,7 +18,6 @@ const userReducer = createReducer({
         state.isAuthenticated = false;
         state.error = action.payload;
     },
-
     registerRequest: state => {
         state.loading = true;
     },
@@ -52,6 +51,13 @@ const userReducer = createReducer({
     clearMessage: state => {
         state.message = null;
     },
+
+    addClassesAsTeacher: (state, actions) => {
+        state.user = actions.payload;
+    },
+    addClassesAsStudent: (state, actions) => {
+        state.user = actions.payload;
+    }
 
 
 });

@@ -14,10 +14,12 @@ import Login from "./pages/Login/Login"
 import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
 import ClassroomDashboard from './pages/Classroom/ClassroomDashboard';
 import Stream from './components/Class/Stream/Stream';
+import Classwork from './components/Class/Classwork/Classwork';
 import HomeLayout from './components/Layout/HomeLayout';
 import Root from './components/Layout/Root';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './redux/actions/user';
+import ClassLayout from './components/Layout/ClassLayout';
 
 
 
@@ -32,7 +34,7 @@ function App() {
 
   const { loading, isAuthenticated, token, user, message, error } = useSelector(state => state.user);
 
-  console.log(isAuthenticated, loading, token, user, message, error);
+  // console.log(isAuthenticated, loading, token, user, message, error);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -47,23 +49,24 @@ function App() {
     }
   }, [dispatch, error, message]);
 
-  // useEffect(() => {
-  //   if (!token) return;
-  //   dispatch(loadUser(token));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
 
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
-        <Route index element={<ClassroomDashboard />} />
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
         <Route path="stream" element={<Stream />} />
-        <Route path='classroom' element={<HomeLayout user={user} />}>
-          <Route index element={<ClassroomDashboard user={user} />} />
-          <Route path='login' element={<Login />} />
-          <Route path='new' element={<Signup />} />
+        <Route path='classroom' element={<HomeLayout />}>
+          <Route index element={<ClassroomDashboard />} />
+        </Route>
+        <Route path='class/:id/' element={<ClassLayout />}>
+          <Route exact path='stream' element={<Stream />} />
+          <Route path='classwork' element={<Classwork />} />
+          <Route path='people' element={<Stream />} />
         </Route>
       </Route>
     ));

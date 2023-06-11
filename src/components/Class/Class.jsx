@@ -13,13 +13,16 @@ import {
     Flex,
 } from '@mantine/core';
 import { forwardRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loadClass } from '../../redux/actions/class';
 
 const useStyles = createStyles((theme) => ({
     card: {
         display: 'flex',
         flexDirection: 'column',
         // alignItems: 'flex-end',
-        // position: 'relative',
+        position: 'relative',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         margin: '15px',
         width: '300px',
@@ -43,8 +46,11 @@ const useStyles = createStyles((theme) => ({
         position: 'absolute',
         top: theme.spacing.xs,
         left: rem(12),
-        pointerEvents: 'none',
         width: '250px',
+    },
+
+    link: {
+        textDecoration: 'none',
     },
 
     description: {
@@ -54,7 +60,6 @@ const useStyles = createStyles((theme) => ({
         position: 'absolute',
         top: rem(12),
         left: rem(12),
-        pointerEvents: 'none',
     },
 
 
@@ -91,7 +96,7 @@ const data = {
     }
 }
 
-const Options = forwardRef(({ ...others }: props, ref) => {
+const Options = forwardRef(({ ...others }, ref) => {
     return (
         <>
             <UnstyledButton
@@ -120,18 +125,25 @@ const Options = forwardRef(({ ...others }: props, ref) => {
 });
 
 
-const Class = () => {
+const Class = ({ classInfo, user }) => {
     const { classes, cx, theme } = useStyles();
-    const linkProps = { href: data.link, target: '_blank', rel: 'noopener noreferrer' };
+    // const linkProps = { href: data.link };
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const handleClick = () => {
+        navigate('/class/1');
+    }
+
+    // console.log(classInfo);
 
     return (
 
         <Card withBorder radius="md" className={classes.card}>
             <Card.Section sx={{ display: "flex", flexDirection: 'column' }} >
                 {/* <a {...linkProps}> */}
-                <Image src={data.image} height={110} w={'300px'} zIndex={0} />
+                <Image src={data.image} height={110} w={'300px'} />
                 {/* </a> */}
-                <Menu shadow="md" width={100} sx={classes.options} zIndex={2}>
+                <Menu shadow="md" width={100} sx={classes.options}>
                     <Menu.Target>
                         <Options />
                     </Menu.Target>
@@ -149,32 +161,27 @@ const Class = () => {
                 </Menu>
 
                 <Group className={classes.title}>
-                    <Text fw={400} fz={"20px"} color='white' truncate>
-                        {/* <Link {...linkProps}> */}
-                        {data.title}
-                        {/* </Link> */}
-                    </Text>
+                    <Link to={`/class/${classInfo._id}/stream`} className={classes.link}>
+                        <Text fw={500} fz={"20px"} color='white' truncate >
+                            {classInfo.className}
+                        </Text>
+                    </Link>
+                    {/* </Link> */}
                     <Text fz={"14px"} color="white" w={'180px'} truncate>
-                        {data.description}
+                        {classInfo.section}
                     </Text>
                     <Text fz={"14px"} inline color='white' w={'180px'} truncate>
-                        {data.author.name}
+                        {classInfo.classOwner.name}
                     </Text>
                 </Group>
 
-
                 <Group position="apart" className={classes.footer}>
-                    {/* <Center> */}
                     <Avatar src={data.author.image} size={85} radius={50} />
-                    {/* </Center> */}
-
-
                 </Group>
-            </Card.Section>
+            </Card.Section >
 
             <Card.Section>
                 <Space h={140} />
-
             </Card.Section>
             <Card.Section h={'45px'} sx={{ display: "flex", borderTop: '2px solid #dadce0', padding: '0px 0 0px 0', alignItems: 'center', minWidth: '250px', justifyContent: 'flex-end' }}>
                 <Flex className={classes.action} h={'45px'} w={'45px'} >

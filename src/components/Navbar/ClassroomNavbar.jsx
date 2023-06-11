@@ -77,44 +77,16 @@ const useStyles = createStyles((theme) => ({
 //     { link: '/', label: 'Other Settings', icon: IconSettings },
 // ];
 
-const ClassroomNavbar = ({ }) => {
+const ClassroomNavbar = () => {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
 
-    // const items = links.map((link) => (
-    //     <a
-    //         key={link.label}
-    //         href={link.link}
-    //         className={classes.link}
-    //         onClick={(event) => event.preventDefault()}
-    //     >
-    //         {link.label}
-    //     </a>
-    // ));
-
-    // const links = data.map((item) => (
-    //     <a
-    //         className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-    //         href={item.link}
-    //         key={item.label}
-    //         onClick={(event) => {
-    //             event.preventDefault();
-    //             setActive(item.label);
-    //         }}
-    //     >
-    //         <item.icon className={classes.linkIcon} stroke={1.5} />
-    //         <span>{item.label}</span>
-    //     </a>
-    // ));
-
     return (
         <>
-            {/* {opened && <ClassroomSidebar />} */}
             <Header height={'8vh'} className={classes.header}>
                 <div className={classes.inner}>
                     <Group>
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        {/* <MantineLogo size={28} /> */}
                         <Title order={3} style={{ marginLeft: 10 }}>
                             CodeRoom
                         </Title>
@@ -131,14 +103,8 @@ const ClassroomNavbar = ({ }) => {
                     </Drawer>
 
                     <Flex>
-                        {/* <Group ml={50} spacing={5} className={classes.links}> */}
-                        {/* <Menu> */}
                         <Create />
                         <UserMenu />
-                        {/* <Space h="md" /> */}
-                        {/* </Menu> */}
-                        {/* </Group> */}
-
                     </Flex>
                 </div>
             </Header>
