@@ -1,7 +1,7 @@
-import { createStyles, Button, Flex, Avatar, Select, Tooltip, Menu } from "@mantine/core";
-
+import { createStyles, Button, Flex, Avatar, Select, Tooltip, Menu, Modal } from "@mantine/core";
+import { useDisclosure } from '@mantine/hooks';
 import React from "react";
-
+import { DateInput } from '@mantine/dates';
 import { useState } from "react";
 import { BsArrowLeftRight, BsUpload, BsLink, BsCaretDownFill } from 'react-icons/bs';
 
@@ -68,11 +68,19 @@ const useStyles = createStyles((theme) => ({
     submit_select_button: {
         width: "40%",
     },
+    modal_upload_container: {
+        marginLeft: "-5%",
+    },
+
+
+
 }));
 const AnnouncementCard = () => {
 
     const { classes, theme } = useStyles();
     const [showDiv1, setShowDiv1] = useState(true);
+    const [value, setValue] = useState(null);
+    const [opened, { open, close }] = useDisclosure(false);
     const toggleDiv = () => {
         setShowDiv1(!showDiv1);
     };
@@ -111,14 +119,26 @@ const AnnouncementCard = () => {
                     </Flex>
                     <textarea type="text" id="announcement_text" name="announcement_text" placeholder="Announce something to your class" className={classes.announcement_text}></textarea>
                     <Flex className={classes.announcement_buttons_container} padding="0px">
+
                         <div >
                             <Tooltip label="Upload Files" style={{ backgroundColor: "green", color: "#DFFFD8" }}>
-                                <Button className={classes.announcement_round_button} ><BsUpload size={"1.2rem"} color="green"></BsUpload> </Button>
+                                <Button className={classes.announcement_round_button} onClick={open} ><BsUpload size={"1.2rem"} color="green"></BsUpload></Button>
+
                             </Tooltip>
                             <Tooltip label="Add Link" style={{ backgroundColor: "green", color: "#DFFFD8" }}>
                                 <Button className={classes.announcement_round_button} ><BsLink size={"1.2rem"} color="green"></BsLink> </Button>
                             </Tooltip>
 
+                            <Modal opened={opened} onClose={close} withCloseButton={false} className={classes.modal_upload_container}>
+                                <DateInput
+                                    value={value}
+                                    onChange={setValue}
+                                    label="Date input"
+                                    placeholder="Date input"
+                                    maw={400}
+                                    mx="auto"
+                                />
+                            </Modal>
 
 
                         </div>

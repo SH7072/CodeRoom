@@ -3,6 +3,9 @@ import { createStyles, Button, Flex, Menu } from "@mantine/core";
 import React from "react";
 
 import { useState } from "react";
+
+
+
 import { BsThreeDotsVertical, BsLink } from 'react-icons/bs';
 
 import AnnouncementCard from "./StreamComponents/AnnouncementCard";
@@ -16,8 +19,9 @@ const useStyles = createStyles((theme) => ({
     main_container: {
         backgroundColor: 'white',
         padding: '2rem',
-        width: '50%',
-        marginLeft: '25%',
+        width: '56%',
+        marginLeft: "22%",
+        marginRight: "22%",
 
     },
     container1: {
