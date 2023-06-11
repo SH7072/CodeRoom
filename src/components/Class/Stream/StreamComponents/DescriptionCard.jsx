@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { createStyles, Button, Modal, ColorSwatch, useMantineTheme, Group } from "@mantine/core";
+import { createStyles, Button, Modal, ColorSwatch, useMantineTheme, Group, Flex } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 import { FaPen, FaCheck } from 'react-icons/fa';
 
@@ -14,12 +14,21 @@ const useStyles = createStyles((theme) => ({
         marginBottom: "1rem",
         height: "15rem",
         borderRadius: "8px",
+        flexDirection: "column",
+        justifyContent: "space-between"
+
+    },
+    des_container1: {
+        padding: "1rem",
+        flexDirection: "column",
+        alignItems: "flex-end",
+    },
+    des_container2: {
+
     },
 
     customize_button: {
-        position: 'relative',
-        left: "84%",
-        top: "5%",
+
         color: "green",
         backgroundColor: "white",
         '&:hover': {
@@ -34,10 +43,9 @@ const useStyles = createStyles((theme) => ({
     },
     classroom_name: {
         backgroundColor: "",
-        position: "relative",
-        top: "40%",
         fontSize: "2rem",
         padding: "1rem",
+        margin: "0px",
         marginLeft: '1rem',
         fontWeight: "bold",
         fontFamily: "Lucida Console, Sans-serif",
@@ -74,13 +82,19 @@ const DescrioptionCard = () => {
     ));
 
     return <>
-        <div className={classes.description_container}>
-            <Button className={classes.customize_button} onClick={open}>
-                <FaPen className={classes.faPen_style} />
-                Customize
-            </Button>
-            <p className={classes.classroom_name}> Mathematics</p>
-        </div>
+        <Flex className={classes.description_container}>
+            <Flex className={classes.des_container1}>
+                <Button className={classes.customize_button} onClick={open}>
+                    <FaPen className={classes.faPen_style} />
+                    Customize
+                </Button>
+            </Flex>
+            <Flex className={classes.des_container2}>
+                <p className={classes.classroom_name}> Mathematics</p>
+            </Flex>
+
+
+        </Flex>
         <Modal opened={opened} onClose={close} size={"50%"} title={"customize appearance"} centered withCloseButton={false} className={classes.Modal_customize_container}>
             <div className={classes.Modal_description_container}  ></div>
             <Modal.Title style={{ margin: "1rem" }}>Select Theme Color</Modal.Title>
