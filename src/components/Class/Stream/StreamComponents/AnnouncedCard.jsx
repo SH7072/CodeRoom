@@ -23,13 +23,13 @@ const useStyles = createStyles((theme) => ({
         marginTop: "1rem",
     },
     profile_picture: {
-        width: "7%",
+        width: "10%",
         justifyContent: "center",
         alignItems: "center",
         height: "3rem",
     },
     profile_Description: {
-        width: "88%",
+        width: "85%",
 
         height: "3rem",
         flexDirection: "column",
@@ -93,7 +93,7 @@ const AnnouncedCard = () => {
     return <>
         <Flex className={classes.announced_card_container}>
             <Flex className={classes.announced_section_1}>
-                <Flex className={classes.profile_picture}><Avatar size={"3rem"}></Avatar></Flex>
+                <Flex className={classes.profile_picture}><Avatar size={"2.5rem"}></Avatar></Flex>
                 <Flex className={classes.profile_Description}>
                     <h4 style={{ margin: "0px", padding: "0px", color: "#434242", fontFamily: "sans-serif" }}>Shobhit Gupta</h4>
                     <h5 style={{ margin: "0px", padding: "0px", color: "gray" }}>05:50</h5>

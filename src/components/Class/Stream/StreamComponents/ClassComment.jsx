@@ -5,17 +5,17 @@ const useStyles = createStyles((theme) => ({
     comment_container: {
 
         marginTop: "0.5%",
-        paddingLeft: "2%",
+        // paddingLeft: "2%",
     },
     comment_profile_picture: {
-        width: "8%",
+        width: "10%",
         // border: "1px solid black",
         alignItems: "center",
         justifyContent: "center",
 
     },
     comment_content_container: {
-        width: "85%",
+        width: "80%",
         // border: "1px solid black",
         flexDirection: "column",
         justifyContent: "center",
@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
 
     },
     trippledot: {
-        width: "7%",
+        // width: "5%",
         // border: "1px solid black",
         alignItems: "center",
         justifyContent: "center",
@@ -38,7 +38,7 @@ const ClassComment = () => {
     const { classes, theme } = useStyles();
     return <>
         <Flex className={classes.comment_container}>
-            <Flex className={classes.comment_profile_picture}><Avatar size={"3rem"}></Avatar></Flex>
+            <Flex className={classes.comment_profile_picture}><Avatar size={"2.5rem"}></Avatar></Flex>
             <Flex className={classes.comment_content_container}>
                 <Flex >
                     <h5 style={{ margin: "0px", padding: "0px", color: "#434242", fontFamily: "sans-serif", fontSize: "1rem", marginRight: "1rem" }}>Shobhit Gupta</h5>
