@@ -46,8 +46,18 @@ const classReducer = createReducer({
         state.loading = false;
         state.error = action.payload;
     },
-
-
+    logoutRequest: state => {
+        state.loading = true;
+    },
+    logoutSuccess: (state, action) => {
+        state.loading = false;
+        state.classInfo = null;
+        state.classes = null;
+    },
+    logoutFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
 });
 
 export default classReducer;

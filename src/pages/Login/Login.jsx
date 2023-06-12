@@ -96,7 +96,6 @@ const Login = () => {
                 <Flex w={'50%'} h={'100%'} justify={'center'} align={'center'} >
                     <Paper w={'60%'} p={10}>
                         <Title order={1} align={'center'}>Log In</Title>
-                        {/* <Text c="dimmed" align={'center'}>Enter your login details below.</Text> */}
                         <Flex justify={'center'} align={'center'} mt={15}>
                             <ActionIcon variant="outline" color="blue" radius="xl" size="xl" style={{ margin: 'auto' }}>
                                 <IconBrandGoogle />

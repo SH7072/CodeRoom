@@ -37,17 +37,17 @@ function App() {
   // console.log(isAuthenticated, loading, token, user, message, error);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (error) {
-      // toast.error(error);
-      dispatch({ type: 'clearError' });
-    }
+  // useEffect(() => {
+  // if (!error) {
+  //   // toast.error(error);
+  //   dispatch({ type: 'clearError' });
+  // }
 
-    if (message) {
-      // toast.success(message);
-      dispatch({ type: 'clearMessage' });
-    }
-  }, [dispatch, error, message]);
+  // if (!message) {
+  //   // toast.success(message);
+  //   dispatch({ type: 'clearMessage' });
+  // }
+  // }, [dispatch, error, message]);
 
   useEffect(() => {
     dispatch(loadUser());

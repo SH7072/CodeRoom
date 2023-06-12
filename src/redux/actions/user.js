@@ -14,15 +14,15 @@ export const login = (email, password, navigate) => async dispatch => {
         const status = res.status;
         const data = await res.json();
 
-        // console.log(data, "data");
-        // console.log(status, "status");
+        console.log(data, "data");
+        console.log(status, "status");
         // console.log(status.OK, "status.OK");
         // console.log('wjkdbwjdbj');
 
         if (status !== 200) {
             dispatch({
                 type: 'loginFail',
-                payload: data.error
+                payload: data.message
             });
         }
         if (status === 200) {
@@ -34,6 +34,7 @@ export const login = (email, password, navigate) => async dispatch => {
             navigate('/classroom');
         }
     } catch (error) {
+        console.log(error, "error");
         dispatch({
             type: 'loginFail',
             payload: error.message
@@ -110,3 +111,18 @@ export const loadUser = () => async dispatch => {
         dispatch({ type: 'loadUserFail', payload: error });
     }
 };
+
+
+export const logout = (navigate) => async dispatch => {
+    try {
+        dispatch({ type: 'logoutRequest' });
+
+        localStorage.removeItem('token');
+
+        dispatch({ type: 'logoutSuccess' });
+        navigate('/login');
+    }
+    catch (error) {
+        dispatch({ type: 'logoutFail', payload: error });
+    }
+}
