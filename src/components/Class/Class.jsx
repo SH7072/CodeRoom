@@ -11,11 +11,15 @@ import {
     UnstyledButton,
     Space,
     Flex,
+    Modal,
+    Container,
+    Input,
+    Button,
 } from '@mantine/core';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loadClass } from '../../redux/actions/class';
+import { archiveClass, editClass, loadClass, unenrollFromClass } from '../../redux/actions/class';
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -125,74 +129,155 @@ const Options = forwardRef(({ ...others }, ref) => {
 });
 
 
-const Class = ({ classInfo, user }) => {
+const Class = ({ classInfo, user, role }) => {
     const { classes, cx, theme } = useStyles();
     // const linkProps = { href: data.link };
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const handleClick = () => {
-        navigate('/class/1');
+
+    const [editClassOpen, setEditClassOpen] = useState(false);
+    const [className, setClassName] = useState(classInfo.className);
+    const [section, setSection] = useState(classInfo.section);
+    const [subject, setSubject] = useState(classInfo.subject);
+
+    const handleEditClassOpen = () => {
+        setEditClassOpen(true);
+    }
+    const handleEditClassClose = () => {
+        setEditClassOpen(false);
     }
 
+    const handleEditClassSave = () => {
+
+        dispatch(editClass(classInfo._id, className, section, subject));
+        // dispatch(loadClass(classInfo._id, data));
+        handleEditClassClose();
+    }
+
+    const handleUnenroll = () => {
+        console.log('unenroll');
+        dispatch(unenrollFromClass(classInfo._id));
+    }
+
+    const handleArchiveClass = () => {
+        console.log('archive');
+        dispatch(archiveClass(classInfo._id));
+    }
+
+
+
+
+
+
+
     // console.log(classInfo);
+    // console.log(role);
 
     return (
+        <>
+            <Card withBorder radius="md" className={classes.card}>
+                <Card.Section sx={{ display: "flex", flexDirection: 'column' }} >
+                    {/* <a {...linkProps}> */}
+                    <Image src={data.image} height={110} w={'300px'} />
+                    {/* </a> */}
+                    <Menu shadow="md" width={100} sx={classes.options}>
+                        <Menu.Target>
+                            <Options />
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                            {
+                                role === 'teacher' &&
+                                <Menu.Item onClick={handleEditClassOpen}>
+                                    Edit
+                                </Menu.Item>
+                            }
+                            {
+                                role === 'student' &&
+                                <Menu.Item onClick={handleUnenroll}>
+                                    Unenroll
+                                </Menu.Item>
+                            }
+                            <Menu.Item onClick={handleArchiveClass}>
+                                Archive
+                            </Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
 
-        <Card withBorder radius="md" className={classes.card}>
-            <Card.Section sx={{ display: "flex", flexDirection: 'column' }} >
-                {/* <a {...linkProps}> */}
-                <Image src={data.image} height={110} w={'300px'} />
-                {/* </a> */}
-                <Menu shadow="md" width={100} sx={classes.options}>
-                    <Menu.Target>
-                        <Options />
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                        <Menu.Item>
-                            Edit
-                        </Menu.Item>
-                        <Menu.Item>
-                            Unenroll
-                        </Menu.Item>
-                        <Menu.Item>
-                            Archive
-                        </Menu.Item>
-                    </Menu.Dropdown>
-                </Menu>
-
-                <Group className={classes.title}>
-                    <Link to={`/class/${classInfo._id}/stream`} className={classes.link}>
-                        <Text fw={500} fz={"20px"} color='white' truncate >
-                            {classInfo.className}
+                    <Group className={classes.title}>
+                        <Link to={`/class/${classInfo._id}/stream`} className={classes.link}>
+                            <Text fw={500} fz={"20px"} color='white' truncate >
+                                {classInfo.className}
+                            </Text>
+                        </Link>
+                        {/* </Link> */}
+                        <Text fz={"14px"} color="white" w={'180px'} truncate>
+                            {classInfo.section}
                         </Text>
-                    </Link>
-                    {/* </Link> */}
-                    <Text fz={"14px"} color="white" w={'180px'} truncate>
-                        {classInfo.section}
-                    </Text>
-                    <Text fz={"14px"} inline color='white' w={'180px'} truncate>
-                        {classInfo.classOwner.name}
-                    </Text>
-                </Group>
+                        <Text fz={"14px"} inline color='white' w={'180px'} truncate>
+                            {classInfo.classOwner.name}
+                        </Text>
+                    </Group>
 
-                <Group position="apart" className={classes.footer}>
-                    <Avatar src={data.author.image} size={85} radius={50} />
-                </Group>
-            </Card.Section >
+                    <Group position="apart" className={classes.footer}>
+                        <Avatar src={data.author.image} size={85} radius={50} />
+                    </Group>
+                </Card.Section >
 
-            <Card.Section>
-                <Space h={140} />
-            </Card.Section>
-            <Card.Section h={'45px'} sx={{ display: "flex", borderTop: '2px solid #dadce0', padding: '0px 0 0px 0', alignItems: 'center', minWidth: '250px', justifyContent: 'flex-end' }}>
-                <Flex className={classes.action} h={'45px'} w={'45px'} >
-                    <IconFolder size="25px" />
-                </Flex>
-                <Flex className={classes.action} h={'45px'} w={'45px'}>
-                    <IconPresentation size="25px" />
-                </Flex>
-            </Card.Section>
-        </Card >
+                <Card.Section>
+                    <Space h={140} />
+                </Card.Section>
+                <Card.Section h={'45px'} sx={{ display: "flex", borderTop: '2px solid #dadce0', padding: '0px 0 0px 0', alignItems: 'center', minWidth: '250px', justifyContent: 'flex-end' }}>
+                    <Flex className={classes.action} h={'45px'} w={'45px'} >
+                        <IconFolder size="25px" />
+                    </Flex>
+                    <Flex className={classes.action} h={'45px'} w={'45px'}>
+                        <IconPresentation size="25px" />
+                    </Flex>
+                </Card.Section>
+            </Card >
 
+
+            <Modal opened={editClassOpen} onClose={handleEditClassClose} title="Edit Class" centered radius={'lg'} size={'520px'}>
+                <Container fluid={true} m={0} p={0}>
+                    <Input.Wrapper label="Classname" required>
+                        <Input
+                            placeholder="Classname"
+                            value={className}
+                            onChange={(e) => setClassName(e.currentTarget.value)}
+                        />
+                    </Input.Wrapper>
+
+
+                    <Input.Wrapper label="Section">
+                        <Input
+                            placeholder="Section"
+                            sx={classes.input}
+                            value={section}
+                            onChange={(e) => setSection(e.currentTarget.value)}
+                        />
+                    </Input.Wrapper>
+                    <Input.Wrapper label="Subject">
+                        <Input
+                            placeholder="Subject"
+                            sx={classes.input}
+                            value={subject}
+                            onChange={(e) => setSubject(e.currentTarget.value)}
+                        />
+                    </Input.Wrapper>
+                    <Flex justify={'flex-end'} gap={'10px'} mt={'20px'}>
+                        <Button variant="subtle" color="gray" onClick={handleEditClassClose}>
+                            Cancel
+                        </Button>
+                        <Button variant="subtle" color="blue" onClick={handleEditClassSave}>
+                            Save
+                        </Button>
+
+
+                    </Flex>
+                </Container>
+
+            </Modal >
+        </>
 
     );
 }

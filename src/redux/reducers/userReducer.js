@@ -78,6 +78,43 @@ const userReducer = createReducer({
         state.loading = false;
         state.error = action.payload;
     },
+    unenrollFromClassRequest: state => {
+        state.loading = true;
+    },
+    unenrollFromClassSuccess: (state, action) => {
+        state.loading = false;
+        state.user.classesAsStudent = state.user.classesAsStudent.filter(class_ => class_.classId !== action.payload);
+    },
+    unenrollFromClassFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    archiveClassRequest: state => {
+        state.loading = true;
+    },
+    archiveClassSuccess: (state, action) => {
+        state.loading = false;
+        state.user.classesAsTeacher = state.user.classesAsTeacher.filter((class_) => {
+            if (class_.classId === action.payload) {
+                class_.isArchived = true;
+            }
+            return class_;
+        }
+        );
+        state.user.classesAsStudent = state.user.classesAsStudent.filter((class_) => {
+            if (class_.classId === action.payload) {
+                class_.isArchived = true;
+            }
+            return class_;
+        }
+        );
+    },
+    archiveClassFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+
+
 
 });
 

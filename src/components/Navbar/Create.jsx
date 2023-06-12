@@ -64,11 +64,6 @@ const Create = () => {
         navigate(`/class/${classInfo.id}`);
 
         handleCreateClose();
-
-
-
-
-
     }
     const handleCreateClose = () => {
         setCreateClassOpen(false);

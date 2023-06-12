@@ -165,3 +165,130 @@ export const loadClass = (classId) => async dispatch => {
         });
     }
 }
+
+export const editClass = (classId, className, section, subject) => async dispatch => {
+    try {
+        dispatch({ type: 'editClassRequest' });
+
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/class/editClass/${classId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ className, section, subject })
+        });
+        const status = res.status;
+        const data = await res.json();
+
+        // console.log(data, "data");
+
+        if (status !== 200) {
+            dispatch({
+                type: 'editClassFail',
+                payload: data.error
+            });
+        }
+        if (status === 200) {
+            dispatch({
+                type: 'editClassSuccess',
+                payload: data.class
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: 'editClassFail',
+            payload: error.message
+        });
+    }
+}
+
+export const unenrollFromClass = (classId) => async dispatch => {
+    try {
+        dispatch({ type: 'unenrollFromClassRequest' });
+
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/class/unenrollFromClass/${classId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            }
+        });
+
+        const status = res.status;
+        const data = await res.json();
+
+        // console.log(data, "data");
+
+        if (status !== 200) {
+            dispatch({
+                type: 'unenrollFromClassFail',
+                payload: data.error
+            });
+        }
+        if (status === 200) {
+            dispatch({
+                type: 'unenrollFromClassSuccess',
+                payload: classId
+            });
+            // dispatch({
+            //     type: 'removeClassesAsStudent',
+            //     payload: classId
+            // });
+            // navigate('/');
+        }
+    }
+    catch (error) {
+        dispatch({
+            type: 'unenrollFromClassFail',
+            payload: error.message
+        });
+    }
+}
+
+export const archiveClass = (classId) => async dispatch => {
+    try {
+        dispatch({ type: 'archiveClassRequest' });
+
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/archiveClass/${classId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+
+        const status = res.status;
+        const data = await res.json();
+
+        console.log(data, "data");
+
+        if (status !== 200) {
+            dispatch({
+                type: 'archiveClassFail',
+                payload: data.error
+            });
+        }
+        if (status === 200) {
+            dispatch({
+                type: 'archiveClassSuccess',
+                payload: classId
+            });
+            // dispatch({
+            //     type: 'removeClassesAsStudent',
+            //     payload: classId
+            // });
+            // navigate('/');
+        }
+    }
+    catch (error) {
+        dispatch({
+            type: 'archiveClassFail',
+            payload: error.message
+        });
+    }
+}
+
+
+
+

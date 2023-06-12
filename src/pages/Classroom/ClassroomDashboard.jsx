@@ -34,36 +34,62 @@ const ClassroomDashboard = () => {
 
     // console.log(classes, 'classes');
 
+    const getRole = (class_) => {
+        if (class_.classTeachers.map((teacher) => teacher.teacherId).includes(user._id)) {
+            return 'teacher';
+        }
+
+        if (class_.classStudents.map((student) => student.studentId).includes(user._id)) {
+            return 'student';
+        }
+    }
+
+    // classes.classesAsTeacher && classes.classesAsTeacher.filter((class_) => {
+    //     // console.log(class_, 'classId 2');
+    //     return class_.isArchived === false;
+    // }).sort((a, b) => {
+    //     return new Date(b.date) - new Date(a.date);
+    // }).map((class_) => {
+    //     console.log(class_, 'classId 3');
+    // });
+
+
+
+
+
     return (
         <>
             <Flex wrap={'wrap'}>
                 {classes &&
-                    classes.classesAsTeacher.map((class_) => {
+                    classes.classesAsTeacher.filter((class_) => {
+                        return class_.isArchived === false
+                    }).sort((a, b) => {
+                        return new Date(b.date) - new Date(a.date);
+                    }).map((class_) => {
                         return (
                             <Class
                                 key={class_._id}
                                 classInfo={class_.classId}
                                 user={user}
+                                role={getRole(class_.classId)}
                             />
                         )
-                    }
-                    ).sort((a, b) => {
-                        return new Date(b.date) - new Date(a.date);
-                    }
-                    )
+                    })
                 }
                 {classes &&
-                    classes.classesAsStudent.map((class_) => {
+                    classes.classesAsStudent.filter((class_) => {
+                        return class_.isArchived === false;
+                    }).sort((a, b) => {
+                        return new Date(b.date) - new Date(a.date);
+                    }).map((class_) => {
                         return (
                             <Class
                                 key={class_._id}
                                 classInfo={class_.classId}
                                 user={user}
+                                role={getRole(class_.classId)}
                             />
                         )
-                    }
-                    ).sort((a, b) => {
-                        return new Date(b.date) - new Date(a.date);
                     }
                     )
                 }

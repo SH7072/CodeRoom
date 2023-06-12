@@ -99,7 +99,7 @@ const Stream = () => {
     const params = useParams();
     const dispatch = useDispatch();
 
-    console.log(params.id);
+    // console.log(params.id);
 
     useEffect(() => {
         // console.log("Stream");
@@ -109,7 +109,7 @@ const Stream = () => {
     const loading = useSelector((state) => { return state.classes.loading });
 
     const classInfo = useSelector((state) => { return state.classes.classInfo });
-    console.log(classInfo, "classInfo");
+    // console.log(classInfo, "classInfo");
 
 
     return <>
