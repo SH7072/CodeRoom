@@ -1,10 +1,10 @@
-import  AccordionCard  from './ClassworkComponents/AccordionCard'
-import  CreateToggleButton  from './ClassworkComponents/CreateToggleButton'
+import AccordionCard from './ClassworkComponents/AccordionCard'
+import CreateToggleButton from './ClassworkComponents/CreateToggleButton'
 import React from 'react'
 import { createStyles, Button, Flex, Menu } from "@mantine/core";
 
 
-const useStyles = createStyles((themes)=>({
+const useStyles = createStyles((themes) => ({
     main_container: {
         backgroundColor: 'white',
         padding: '2rem',
@@ -18,13 +18,13 @@ const useStyles = createStyles((themes)=>({
 
 
 const Classwork = () => {
-    
+
     const { classes, theme } = useStyles();
 
     return (
         <div className={classes.main_container}>
             <CreateToggleButton></CreateToggleButton>
-            <br />      
+            <br />
             <AccordionCard></AccordionCard>
         </div>
     )

@@ -14,8 +14,8 @@ export const login = (email, password, navigate) => async dispatch => {
         const status = res.status;
         const data = await res.json();
 
-        console.log(data, "data");
-        console.log(status, "status");
+        // console.log(data, "data");
+        // console.log(status, "status");
         // console.log(status.OK, "status.OK");
         // console.log('wjkdbwjdbj');
 

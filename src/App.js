@@ -20,6 +20,7 @@ import Root from './components/Layout/Root';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './redux/actions/user';
 import ClassLayout from './components/Layout/ClassLayout';
+import Protected from './Protected';
 
 
 
@@ -59,11 +60,26 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
-        <Route path="stream" element={<Stream />} />
-        <Route path='classroom' element={<HomeLayout />}>
-          <Route index element={<ClassroomDashboard />} />
+        <Route
+          path='classroom'
+          element={
+            <Protected isAuthenticated={isAuthenticated}>
+              <HomeLayout />
+            </Protected>}>
+          <Route
+            index
+            element={
+              <ClassroomDashboard />
+            } />
         </Route>
-        <Route path='class/:id/' element={<ClassLayout />}>
+        <Route
+          path='class/:id/'
+          element={
+            <Protected isAuthenticated={isAuthenticated}>
+              <ClassLayout />
+            </Protected>
+          }
+        >
           <Route exact path='stream' element={<Stream />} />
           <Route path='classwork' element={<Classwork />} />
           <Route path='people' element={<Stream />} />

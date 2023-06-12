@@ -118,7 +118,7 @@ const ClassNavbar = () => {
 
 
     const classState = useSelector((state) => state.classes);
-    console.log(classState, 'classState');
+    // console.log(classState, 'classState');
 
 
     const items = ['Stream', 'Classwork', 'People'].map((tab) => (

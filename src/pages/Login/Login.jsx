@@ -80,7 +80,7 @@ const Login = () => {
         e.preventDefault();
 
         if (handleValidation()) {
-            console.log(email, password);
+            // console.log(email, password);
             dispatch(login(email, password, navigate));
         }
     };
