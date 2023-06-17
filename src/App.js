@@ -33,9 +33,9 @@ import Protected from './Protected';
 
 function App() {
 
-  const { loading, isAuthenticated, token, user, message, error } = useSelector(state => state.user);
+  const { loading, isAuthenticated, user, message, error } = useSelector(state => state.user);
 
-  // console.log(isAuthenticated, loading, token, user, message, error);
+  // console.log(loading, isAuthenticated, user);
 
   const dispatch = useDispatch();
   // useEffect(() => {
@@ -63,7 +63,7 @@ function App() {
         <Route
           path='classroom'
           element={
-            <Protected isAuthenticated={isAuthenticated}>
+            <Protected>
               <HomeLayout />
             </Protected>}>
           <Route
@@ -75,7 +75,7 @@ function App() {
         <Route
           path='class/:id/'
           element={
-            <Protected isAuthenticated={isAuthenticated}>
+            <Protected>
               <ClassLayout />
             </Protected>
           }

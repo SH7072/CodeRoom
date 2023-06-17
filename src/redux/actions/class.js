@@ -288,7 +288,3 @@ export const archiveClass = (classId) => async dispatch => {
         });
     }
 }
-
-
-
-

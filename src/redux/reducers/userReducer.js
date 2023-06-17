@@ -2,35 +2,31 @@ import { createReducer, createSlice } from "@reduxjs/toolkit";
 
 const userReducer = createReducer({
     loading: false,
-    isAuthenticated: false,
     user: null,
-    token: null,
     error: null,
     message: null
-
 }, {
     loginRequest: state => {
         state.loading = true;
     },
     loginSuccess: (state, action) => {
+        localStorage.setItem("isUserAuthenticated", true);
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload.userId;
-        state.token = action.payload.token;
         state.message = action.payload.message;
     },
     loginFail: (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.error = action.payload;
+        localStorage.removeItem("isUserAuthenticated");
     },
     registerRequest: state => {
         state.loading = true;
     },
     registerSuccess: (state, action) => {
         state.loading = false;
-        // state.isAuthenticated = true;
-        // state.user = action.payload.user;
         state.message = action.payload.message;
     },
     registerFail: (state, action) => {
@@ -45,11 +41,13 @@ const userReducer = createReducer({
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload;
+        localStorage.setItem("isUserAuthenticated", true);
     },
     loadUserFail: (state, action) => {
         state.loading = false;
         state.isAuthenticated = false;
         state.error = action.payload;
+        localStorage.removeItem("isUserAuthenticated");
     },
     clearError: state => {
         state.error = null;
@@ -71,8 +69,8 @@ const userReducer = createReducer({
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
-        state.token = null;
         state.message = null;
+        localStorage.removeItem("isUserAuthenticated");
     },
     logoutFail: (state, action) => {
         state.loading = false;
