@@ -3,7 +3,9 @@ import { createStyles, Button, Flex, Avatar, TextInput, Menu } from "@mantine/co
 import { BsThreeDotsVertical, BsPeopleFill } from 'react-icons/bs';
 import { TbArrowBigRight } from 'react-icons/tb';
 import ClassComment from "./ClassComment";
-
+import parse from 'html-react-parser';
+import DisplayFile from "../../Classwork/ClassworkComponents/DisplayFile";
+import DisplayAttachment from "../../DisplayAttachment";
 
 const useStyles = createStyles((theme) => ({
     announced_card_container: {
@@ -11,9 +13,9 @@ const useStyles = createStyles((theme) => ({
         backgroundColor: "white",
 
         width: '100%',
-        boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+        // boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         borderRadius: "8px",
-        border: "0px solid gray",
+        border: "2px solid rgb(218, 220, 224)",
 
         alignItems: "center",
         flexDirection: "column",
@@ -83,10 +85,49 @@ const useStyles = createStyles((theme) => ({
         justifyContent: "center",
 
     },
+    displayContainer: {
+        flexWrap: 'wrap',
+        width: 'calc(100%-2rem)',
+        padding: '1rem',
+    }
+
+}));
 
 
-}))
-const AnnouncedCard = () => {
+const formatDateTime = (date) => {
+    //get the date and time in AM PM format
+    let dateTime = new Date(date);
+    let hours = dateTime.getHours();
+    let minutes = dateTime.getMinutes();
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+
+    //get the date in dd/mm/yyyy format
+    let day = dateTime.getDate();
+    let month = dateTime.getMonth() + 1;
+    let year = dateTime.getFullYear();
+    let strDate = day + "/" + month + "/" + year;
+
+    //return only date if not today
+    if (dateTime.getDate() !== dateTime.getDate() || dateTime.getMonth() !== dateTime.getMonth() || dateTime.getFullYear() !== dateTime.getFullYear()) {
+        return strDate;
+    }
+
+    //return only time if today
+    let today = new Date();
+    if (today.getDate() === dateTime.getDate() && today.getMonth() === dateTime.getMonth() && today.getFullYear() === dateTime.getFullYear()) {
+        return strTime;
+    }
+
+}
+
+const AnnouncedCard = ({ announcement }) => {
+
+    console.log(announcement);
 
     const { classes, theme } = useStyles();
 
@@ -95,8 +136,8 @@ const AnnouncedCard = () => {
             <Flex className={classes.announced_section_1}>
                 <Flex className={classes.profile_picture}><Avatar size={"2.5rem"}></Avatar></Flex>
                 <Flex className={classes.profile_Description}>
-                    <h4 style={{ margin: "0px", padding: "0px", color: "#434242", fontFamily: "sans-serif" }}>Shobhit Gupta</h4>
-                    <h5 style={{ margin: "0px", padding: "0px", color: "gray" }}>05:50</h5>
+                    <h4 style={{ margin: "0px", padding: "0px", color: "#434242", fontFamily: "sans-serif" }}>{announcement.announcementBy.name}</h4>
+                    <h5 style={{ margin: "0px", padding: "0px", color: "gray" }}>{formatDateTime(announcement.announcementDate)}</h5>
                 </Flex>
                 <Flex className={classes.three_dot_icon}>
                     <Menu position="right" offset={6} withArrow>
@@ -112,13 +153,20 @@ const AnnouncedCard = () => {
                     </Menu>
                 </Flex>
             </Flex>
-            <div className={classes.announced_section_2}><h5 style={{ margin: "0px", color: "black", fontFamily: "sans-serif", fontWeight: "lighter", fontSize: "0.9rem" }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </h5></div>
+            <div className={classes.announced_section_2}>
+                <h5 style={{ margin: "0px", color: "black", fontFamily: "sans-serif", fontWeight: "lighter", fontSize: "0.9rem" }}>
+                    {announcement.announcement && parse(announcement.announcement)}
+                </h5>
+            </div>
+            <Flex gap={'1rem'} sx={classes.displayContainer}>
+                {announcement.attachments && announcement.attachments.length > 0 && announcement.attachments.map((file, index) => {
+                    return <DisplayAttachment file={file} key={index} />
+                })}
+            </Flex>
             <div className={classes.announced_section_3}>
                 <Flex className={classes.no_of_comments}><BsPeopleFill size={"1.5rem"} color="gray" ></BsPeopleFill>
                     <h5 style={{ margin: "0rem", marginLeft: "0.7rem", color: "gray", fontFamily: "revert", fontWeight: "bolder", fontSize: "0.8rem" }}>2 class comments</h5>
                 </Flex>
-                <ClassComment></ClassComment>
-                <ClassComment></ClassComment>
             </div>
             <Flex className={classes.announced_section_4}>
                 <Flex className={classes.writeComment_div1}><Avatar size={"3rem"}></Avatar></Flex>

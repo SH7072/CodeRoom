@@ -18,6 +18,7 @@ import ScheduleAnnouncement from "./StreamComponents/ScheduledAnnouncement";
 import { loadClass } from "../../../redux/actions/class";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { loadAnnouncements } from "../../../redux/actions/announcement";
 const useStyles = createStyles((theme) => ({
     main_container: {
         backgroundColor: 'white',
@@ -104,11 +105,15 @@ const Stream = () => {
     useEffect(() => {
         // console.log("Stream");
         dispatch(loadClass(params.id));
+        dispatch(loadAnnouncements(params.id));
     }, [dispatch, params.id]);
 
     const loading = useSelector((state) => { return state.classes.loading });
 
     const classInfo = useSelector((state) => { return state.classes.classInfo });
+    const announcementsLoading = useSelector((state) => { return state.announcements.loading });
+    const announcements = useSelector((state) => { return state.announcements.announcementList });
+    const role = useSelector((state) => { return state.classes.role });
     // console.log(classInfo, "classInfo");
 
 
@@ -117,7 +122,7 @@ const Stream = () => {
             !loading && classInfo &&
 
             <div className={classes.main_container}>
-                <DescrioptionCard></DescrioptionCard>
+                <DescrioptionCard className={classInfo.className} ></DescrioptionCard>
 
                 <Flex>
                     <Flex style={{ flexDirection: "column" }} className={classes.container1}>
@@ -170,18 +175,20 @@ const Stream = () => {
                             <Flex style={{ flexDirection: "column", alignItems: "flex-end" }}>
                                 <Button className={classes.viewAll_button}>View All</Button>
                             </Flex>
-
                         </div>
                     </Flex>
 
 
                     <Flex style={{ flexDirection: "column" }} className={classes.container2}>
 
-                        <AnnouncementCard></AnnouncementCard>
+                        <AnnouncementCard classInfo={classInfo} role={role}></AnnouncementCard>
                         <ScheduleAnnouncement></ScheduleAnnouncement>
-                        <AnnouncedCard></AnnouncedCard>
-                        <AnnouncedCard></AnnouncedCard>
-                        <AnnouncedCard></AnnouncedCard>
+                        {
+                            !announcementsLoading && announcements && announcements.map((announcement, index) => {
+                                return <AnnouncedCard announcement={announcement} key={index}></AnnouncedCard>
+                            }
+                            )
+                        }
 
                     </Flex>
                 </Flex >

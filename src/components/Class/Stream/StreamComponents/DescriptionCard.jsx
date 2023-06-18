@@ -69,7 +69,7 @@ const useStyles = createStyles((theme) => ({
 
 }));
 
-const DescrioptionCard = () => {
+const DescrioptionCard = ({ className }) => {
 
     const { classes } = useStyles();
     const [opened, { open, close }] = useDisclosure(false);
@@ -90,7 +90,7 @@ const DescrioptionCard = () => {
                 </Button>
             </Flex>
             <Flex className={classes.des_container2}>
-                <p className={classes.classroom_name}> Mathematics</p>
+                <p className={classes.classroom_name}>{className}</p>
             </Flex>
 
 

@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './redux/actions/user';
 import ClassLayout from './components/Layout/ClassLayout';
 import Protected from './Protected';
+import People from './components/Class/People/People';
 
 
 
@@ -83,7 +84,7 @@ function App() {
         >
           <Route exact path='stream' element={<Stream />} />
           <Route exact path='classwork' element={<Classwork />} />
-          <Route exact path='people' element={<Stream />} />
+          <Route exact path='people' element={<People />} />
         </Route>
       </Route>
     ));

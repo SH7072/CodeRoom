@@ -10,6 +10,7 @@ import { BsThreeDotsVertical, BsLink, BsPersonPlus, BsPersonCircle } from 'react
 import { loadClass } from "../../../redux/actions/class";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { loadPeople } from "../../../redux/actions/people";
 
 const useStyles = createStyles((theme) => ({
     main_container: {
@@ -38,64 +39,126 @@ const useStyles = createStyles((theme) => ({
 const People = () => {
     const { classes, theme } = useStyles();
     const { elements, setElements } = useState([]);
-    // const rows = elements.map((element) => (
-    //     <tr key={element.people}>
-    //         <td>{element.avatar}</td>
-    //         <td>{element.name}</td>
-    //         <td>{element.icon}</td>
-    //     </tr>
-    // ));
+    const params = useParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadPeople(params.id));
+    }, [params.id]);
+
+    const loading = useSelector((state) => { return state.people.loading });
+    const teacherList = useSelector((state) => { return state.people.teacherList });
+    const studentList = useSelector((state) => { return state.people.studentList });
+
+
     return (
-        <div className={classes.main_container}>
+        <>
+            {
+                !loading && (
+                    <div className={classes.main_container}>
 
-            <div className="teachers">
-                <Table  horizontalSpacing={"xl"} 
-                // highlightOnHover
-                >
-                    <thead>
-                        <tr>
-                            <th >
-                                <Flex style={{ flexDirection: "row" }}>
-                                    <Flex className={classes.container1}>
+                        <div className="teachers">
+                            <Table horizontalSpacing={"xl"}>
+                                <thead>
+                                    <tr>
+                                        <th >
+                                            <Flex style={{ flexDirection: "row" }}>
+                                                <Flex className={classes.container1}>
+                                                    Teachers
+                                                </Flex>
+                                                <Flex className={classes.container2}>
+                                                    <Button radius={"50%"} style={{ backgroundColor: "white" }}>
+                                                        <BsPersonPlus color={"Green"} />
+                                                    </Button>
+                                                </Flex>
+                                            </Flex>
+                                        </th>
 
-                                        Teachers
-                                    </Flex>
-                                    <Flex className={classes.container2}>
-                                        <Button radius={"50%"} style={{ backgroundColor: "white" }}>
-                                            <BsPersonPlus color={"Green"} />
-                                        </Button>
-                                    </Flex>
-                                </Flex>
-                            </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        teacherList && teacherList.map((teacher, index) => {
+                                            return (
+                                                <tr key="ad">
+                                                    <td>
+                                                        <Flex direction={"row"}>
+                                                            <Flex className={classes.container1}>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr key="ad">
-                            <td>
-                                <Flex direction={"row"}>
-                                    <Flex className={classes.container1}>
+                                                                <BsPersonCircle />
 
-                                        <BsPersonCircle />
+                                                                {teacher.name}
+                                                            </Flex>
+                                                            <Flex className={classes.container2}>
 
-                                        Shubham Chandwani
-                                    </Flex>
-                                    <Flex className={classes.container2}>
+                                                                <Button radius={"50%"} style={{ backgroundColor: "white" }}>
+                                                                    <BsThreeDotsVertical color={"black"} />
+                                                                </Button>
+                                                            </Flex>
+                                                        </Flex>
+                                                    </td>
 
-                                        <Button radius={"50%"} style={{ backgroundColor: "white" }}>
-                                            <BsThreeDotsVertical color={"black"} />
-                                        </Button>
-                                    </Flex>
-                                </Flex>
-                            </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        </div>
 
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-            <div className="teachers">Students
-            </div>
-        </div >
+
+                        <div className="teachers">
+                            <Table horizontalSpacing={"xl"}>
+                                <thead>
+                                    <tr>
+                                        <th >
+                                            <Flex style={{ flexDirection: "row" }}>
+                                                <Flex className={classes.container1}>
+                                                    Students
+                                                </Flex>
+                                                <Flex className={classes.container2}>
+                                                    <Button radius={"50%"} style={{ backgroundColor: "white" }}>
+                                                        <BsPersonPlus color={"Green"} />
+                                                    </Button>
+                                                </Flex>
+                                            </Flex>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        studentList && studentList.map((student, index) => {
+                                            return (
+                                                <tr key="ad">
+                                                    <td>
+                                                        <Flex direction={"row"}>
+                                                            <Flex className={classes.container1}>
+
+                                                                <BsPersonCircle />
+
+                                                                {student.name}
+                                                            </Flex>
+                                                            <Flex className={classes.container2}>
+
+                                                                <Button radius={"50%"} style={{ backgroundColor: "white" }}>
+                                                                    <BsThreeDotsVertical color={"black"} />
+                                                                </Button>
+                                                            </Flex>
+                                                        </Flex>
+                                                    </td>
+
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div >
+                )
+            }
+        </>
     )
 }
 
