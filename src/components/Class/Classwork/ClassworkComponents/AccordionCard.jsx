@@ -1,6 +1,6 @@
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons-react';
 // import { Article } from '@tabler-icons-react';
-import { IconArticleFilledFilled, IconDotsVertical,IconArticle,IconHelpHexagon,IconNotes   } from '@tabler/icons-react';
+import { IconArticleFilledFilled, IconDotsVertical, IconArticle, IconHelpHexagon, IconNotes } from '@tabler/icons-react';
 import { Accordion, useMantineTheme, rem, createStyles, Flex, Image, Menu, Button } from '@mantine/core';
 
 
@@ -23,7 +23,7 @@ const useStyles = createStyles((themes) => ({
         alignItems: "center",
         flexDirection: "column",
     },
-    
+
     accordion_section: {
         width: '100%',
         alignItems: "center",
@@ -46,7 +46,7 @@ const useStyles = createStyles((themes) => ({
 
     },
     three_dot_icon: {
-        
+
         justifyContent: "center",
         alignItems: "right",
         flexDirection: "column",
@@ -54,32 +54,40 @@ const useStyles = createStyles((themes) => ({
     },
 
 }));
-const AccordionCard = () => {
+
+const formatDate = (date) => {
+    const d = new Date(date);
+    const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    return `${da}-${mo}-${ye}`;
+}
+
+
+const AccordionCard = ({ classWork }) => {
 
     const { classes } = useStyles();
     return (
 
         <div className={classes.accordion_card_container} >
-            
 
             <Accordion variant="contained"
-            chevron={<IconArticleFilledFilled size={0 } />}>
-
+                chevron={<IconArticleFilledFilled size={0} />}>
                 <Accordion.Item value="Assignments">
-                    <Accordion.Control icon={<IconArticleFilledFilled size={40}  />}>
+                    <Accordion.Control icon={<IconArticleFilledFilled size={40} />}>
 
                         <Flex className={classes.accordion_section}>
                             <Flex className={classes.assignment_heading}>
-                                <p>Assignment 1</p>
+                                <p>{classWork.title}</p>
                             </Flex >
                             <Flex className={classes.due_date}>
-                                <p>Due Date 5 May</p>
+                                <p>{formatDate(classWork.dueDate)}</p>
 
                             </Flex>
                             <Flex className={classes.three_dot_icon}>
                                 <Menu position="right" offset={6} withArrow>
                                     <Menu.Target>
-                                        <Button radius={"50%"} style={{ backgroundColor: "white" }}> <IconDotsVertical color={"black"} size={"1rem"}></IconDotsVertical ></Button>
+                                        <IconDotsVertical color={"black"} size={"1rem"}></IconDotsVertical >
                                     </Menu.Target>
                                     <Menu.Dropdown>
                                         <Menu.Item>Edit</Menu.Item>
@@ -91,11 +99,13 @@ const AccordionCard = () => {
                         </Flex>
                     </Accordion.Control>
 
-                    <Accordion.Panel>Content</Accordion.Panel>
+                    <Accordion.Panel>{classWork.instructions}</Accordion.Panel>
                 </Accordion.Item>
 
-                <Accordion.Item value="AssignmentsNoDueDate">
-                    <Accordion.Control icon={<IconArticle size={40}  />}>
+
+
+                {/* <Accordion.Item value="AssignmentsNoDueDate">
+                    <Accordion.Control icon={<IconArticle size={40} />}>
 
                         <Flex className={classes.accordion_section}>
                             <Flex className={classes.assignment_heading}>
@@ -108,7 +118,7 @@ const AccordionCard = () => {
                             <Flex className={classes.three_dot_icon}>
                                 <Menu position="right" offset={6} withArrow>
                                     <Menu.Target>
-                                        <Button radius={"50%"} style={{ backgroundColor: "white" }}> <IconDotsVertical color={"black"} size={"1rem"}></IconDotsVertical ></Button>
+                                        <IconDotsVertical color={"black"} size={"1rem"}></IconDotsVertical >
                                     </Menu.Target>
                                     <Menu.Dropdown>
                                         <Menu.Item>Edit</Menu.Item>
@@ -125,7 +135,7 @@ const AccordionCard = () => {
 
 
                 <Accordion.Item value="StudyMaterial">
-                    <Accordion.Control icon={<IconNotes size={40}  />}>
+                    <Accordion.Control icon={<IconNotes size={40} />}>
 
                         <Flex className={classes.accordion_section}>
                             <Flex className={classes.assignment_heading}>
@@ -135,10 +145,10 @@ const AccordionCard = () => {
                                 <p>Posted on 5 May</p>
 
                             </Flex>
-                            <Flex className={classes.three_dot_icon} flexDirection='column' >
+                            <Flex className={classes.three_dot_icon} direction='column' >
                                 <Menu position="right" offset={6} withArrow>
                                     <Menu.Target>
-                                        <Button radius={"50%"} style={{ backgroundColor: "white" }}> <IconDotsVertical color={"black"} size={"1rem"}></IconDotsVertical ></Button>
+                                        <IconDotsVertical color={"black"} size={"1rem"}></IconDotsVertical >
                                     </Menu.Target>
                                     <Menu.Dropdown>
                                         <Menu.Item>Edit</Menu.Item>
@@ -151,8 +161,8 @@ const AccordionCard = () => {
                     </Accordion.Control>
 
                     <Accordion.Panel>Content</Accordion.Panel>
-                </Accordion.Item>
-            
+                </Accordion.Item> */}
+
             </Accordion>
 
         </div>

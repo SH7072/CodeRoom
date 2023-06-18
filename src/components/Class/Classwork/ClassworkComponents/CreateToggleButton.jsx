@@ -9,74 +9,80 @@ const CreateToggleButton = () => {
 
     const [openedAssignmentModal, setOpenedAssignmentModal] = useState(false);
 
+    const loading = useSelector((state) => { return state.classes.loading });
     const classInfo = useSelector(state => state.classes.classInfo);
+
+    // console.log(loading);
+    // console.log(classInfo);
 
     return (
         <>
-            <div>
-                <Menu width={200} border-radius={40}
-                    shadow="md">
-                    <Menu.Target>
+            {!loading && classInfo &&
 
-                        <Button radius={"15rem"} style={{ backgroundColor: "green" }}>
-                            <IconPlus />Create</Button>
-                    </Menu.Target>
+                <div>
+                    <Menu width={200} border-radius={40}
+                        shadow="md">
+                        <Menu.Target>
 
-                    <Menu.Dropdown>
+                            <Button radius={"15rem"} style={{ backgroundColor: "green" }}>
+                                <IconPlus />Create</Button>
+                        </Menu.Target>
+
+                        <Menu.Dropdown>
 
 
-                        <Menu.Item
-                            icon={<IconCodeCircle2 size={rem(14)} />}
-                            component="a"
-                            href="https://mantine.dev"
-                            target="_blank"
-                        >
-                            Live Coding Assignment
-                        </Menu.Item>
+                            <Menu.Item
+                                icon={<IconCodeCircle2 size={rem(14)} />}
+                                component="a"
+                                href="https://mantine.dev"
+                                target="_blank"
+                            >
+                                Live Coding Assignment
+                            </Menu.Item>
 
-                        <Menu.Item
-                            icon={<IconHelpHexagon size={rem(14)} />}
-                            component="a"
-                            href="https://mantine.dev"
-                            target="_blank"
-                        >
-                            Quiz Assignment
-                        </Menu.Item>
+                            <Menu.Item
+                                icon={<IconHelpHexagon size={rem(14)} />}
+                                component="a"
+                                href="https://mantine.dev"
+                                target="_blank"
+                            >
+                                Quiz Assignment
+                            </Menu.Item>
 
-                        <Menu.Item
-                            icon={<IconClipboardText size={rem(14)} />}
-                            // component="a"
-                            // href="https://mantine.dev"
-                            // target="_blank"
-                            component='button'
-                            onClick={() => setOpenedAssignmentModal(!openedAssignmentModal)}
-                        >
-                            Assignment
-                        </Menu.Item>
+                            <Menu.Item
+                                icon={<IconClipboardText size={rem(14)} />}
+                                // component="a"
+                                // href="https://mantine.dev"
+                                // target="_blank"
+                                component='button'
+                                onClick={() => setOpenedAssignmentModal(!openedAssignmentModal)}
+                            >
+                                Assignment
+                            </Menu.Item>
 
-                        <Menu.Item
-                            icon={<IconNotes size={rem(14)} />}
-                            component="a"
-                            href="https://mantine.dev"
-                            target="_blank"
-                        >
-                            Material
-                        </Menu.Item>
+                            <Menu.Item
+                                icon={<IconNotes size={rem(14)} />}
+                                component="a"
+                                href="https://mantine.dev"
+                                target="_blank"
+                            >
+                                Material
+                            </Menu.Item>
 
-                        <Menu.Item
-                            icon={<IconExternalLink size={rem(14)} />}
-                            component="a"
-                            href="https://mantine.dev"
-                            target="_blank"
-                        >
-                            External link
-                        </Menu.Item>
+                            <Menu.Item
+                                icon={<IconExternalLink size={rem(14)} />}
+                                component="a"
+                                href="https://mantine.dev"
+                                target="_blank"
+                            >
+                                External link
+                            </Menu.Item>
 
-                    </Menu.Dropdown>
-                </Menu>
-            </div>
+                        </Menu.Dropdown>
+                    </Menu>
+                </div>}
 
-            <AssignmentModal classInfo={classInfo} openedAssignmentModal={openedAssignmentModal} setOpenedAssignmentModal={setOpenedAssignmentModal}></AssignmentModal>
+            {classInfo && <AssignmentModal classInfo={classInfo} openedAssignmentModal={openedAssignmentModal} setOpenedAssignmentModal={setOpenedAssignmentModal}></AssignmentModal>}
 
         </>
     )

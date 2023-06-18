@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 
 export const joinClass = (classCode, navigate) => async dispatch => {
     try {
@@ -126,11 +127,20 @@ export const getAllClassRooms = () => async dispatch => {
     }
 }
 
+const getRole = (class_, userId) => {
+
+    if (class_.classTeachers.map((teacher) => teacher.teacherId).includes(userId)) {
+        return 'teacher';
+    }
+
+    if (class_.classStudents.map((student) => student.studentId).includes(userId)) {
+        return 'student';
+    }
+}
+
 export const loadClass = (classId) => async dispatch => {
     try {
         dispatch({ type: 'loadClassRequest' });
-
-        // console.log(classId, "classId");
 
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/class/getClassInfo/${classId}`, {
             method: "GET",
@@ -155,7 +165,7 @@ export const loadClass = (classId) => async dispatch => {
         if (status === 200) {
             await dispatch({
                 type: 'loadClassSuccess',
-                payload: data.class
+                payload: data
             });
         }
     } catch (error) {

@@ -1,7 +1,11 @@
 import { createReducer, createSlice } from "@reduxjs/toolkit";
 
 const classReducer = createReducer({
-
+    loading: false,
+    classInfo: null,
+    classes: null,
+    error: null,
+    role: null
 }, {
     createClassRequest: state => {
         state.loading = true;
@@ -19,7 +23,8 @@ const classReducer = createReducer({
     },
     loadClassSuccess: (state, action) => {
         state.loading = false;
-        state.classInfo = action.payload;
+        state.classInfo = action.payload.class;
+        state.role = action.payload.role;
     },
     loadClassFail: (state, action) => {
         state.loading = false;
@@ -108,11 +113,7 @@ const classReducer = createReducer({
     archiveClassFail: (state, action) => {
         state.loading = false;
         state.error = action.payload;
-    }
-
-
-
-
+    },
 });
 
 export default classReducer;

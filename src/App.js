@@ -73,7 +73,8 @@ function App() {
             } />
         </Route>
         <Route
-          path='class/:id/'
+          exact
+          path='class/:id'
           element={
             <Protected>
               <ClassLayout />
@@ -81,8 +82,8 @@ function App() {
           }
         >
           <Route exact path='stream' element={<Stream />} />
-          <Route path='classwork' element={<Classwork />} />
-          <Route path='people' element={<Stream />} />
+          <Route exact path='classwork' element={<Classwork />} />
+          <Route exact path='people' element={<Stream />} />
         </Route>
       </Route>
     ));

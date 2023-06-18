@@ -8,6 +8,7 @@ import ClassSettings from './ClassSetting';
 import ClassSetting from './ClassSetting';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 // import { MantineLogo } from '@mantine/ds';
 
 
@@ -111,21 +112,20 @@ const ClassNavbar = () => {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
     const navigate = useNavigate();
-    const { tabValue } = useParams();
+    const param = useParams();
+
+    // console.log(param);
 
     const loading = useSelector((state) => { return state.classes.loading });
     const classInfo = useSelector((state) => { return state.classes.classInfo });
+    // const navState = useSelector((state) => { return state.classes.classNavState });
 
+    const [tabValue, setTabValue] = useState('stream');
 
-    const classState = useSelector((state) => state.classes);
-    // console.log(classState, 'classState');
-
-
-    const items = ['Stream', 'Classwork', 'People'].map((tab) => (
-        <Tabs.Tab value={tab} key={tab}>
-            {tab}
-        </Tabs.Tab>
-    ));
+    const handleClick = () => {
+        setTabValue('stream');
+        navigate(`/class/${classInfo._id}/stream`);
+    }
 
     return (
         <>
@@ -144,16 +144,20 @@ const ClassNavbar = () => {
                     <div className={classes.inner}>
                         <Group>
                             <Burger opened={opened} onClick={toggle} size="sm" />
-                            <Title order={3} style={{ marginLeft: 10 }}>
+                            <Title order={3} style={{ marginLeft: 10 }} onClick={handleClick}>
                                 {classInfo.className}
                             </Title>
                         </Group>
 
                         <Flex h={'100%'}>
                             <Tabs
-                                defaultValue="stream"
                                 value={tabValue}
-                                onTabChange={(value) => navigate(`${value}`)}
+                                onTabChange={(value) => {
+                                    setTabValue(value);
+                                    navigate(`/class/${classInfo._id}/${value}`);
+                                }}
+
+
                                 classNames={{
                                     root: classes.tabs,
                                     tabsList: classes.tabsList,

@@ -161,7 +161,7 @@ const Stream = () => {
                             </Flex>
 
                             {/* <BsThreeDotsVertical className={classes.verticalDots} /> */}
-                            <h3 style={{ margin: "0px", marginTop: "1rem", color: "green", fontSize: "20px" }}>2pEjuKl</h3>
+                            <h3 style={{ margin: "0px", marginTop: "1rem", color: "green", fontSize: "20px" }}>{classInfo.classCode}</h3>
                         </div>
                         <div className={classes.upcoming}>
                             <p style={{ margin: '0px', marginBottom: '1rem' }}>Upcoming</p>

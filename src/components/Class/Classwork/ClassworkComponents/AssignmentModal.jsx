@@ -131,6 +131,7 @@ const AssignmentModal = ({ classInfo, openedAssignmentModal, setOpenedAssignment
             classRoom,
             assignedTo,
         ));
+        closeAssignmentModal();
 
     };
 
