@@ -108,12 +108,6 @@ const AnnouncementCard = ({ classInfo, role }) => {
     }
 
     const submitAnnouncement = () => {
-        console.log("submitting announcement");
-        console.log("classId", classId);
-        console.log("instructions", instructions);
-        console.log("files", files);
-        console.log("assignedTo", "All Students");
-
         dispatch(createAnnouncement(classId, instructions, files, []));
         toggleDiv();
     }

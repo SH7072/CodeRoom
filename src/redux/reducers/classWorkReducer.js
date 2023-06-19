@@ -10,7 +10,7 @@ const classWorkReducer = createReducer({
     },
     createClassWorkSuccess: (state, action) => {
         state.loading = false;
-        state.classWork = state.classWork.push(action.payload);
+        state.classWork = [...state.classWork, action.payload];
     },
     createClassWorkFail: (state, action) => {
         state.loading = false;

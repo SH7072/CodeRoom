@@ -56,6 +56,8 @@ const useStyles = createStyles((themes) => ({
 }));
 
 const formatDate = (date) => {
+    // console.log(date);
+    if (!date) return "No Due Date";
     const d = new Date(date);
     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
     const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);

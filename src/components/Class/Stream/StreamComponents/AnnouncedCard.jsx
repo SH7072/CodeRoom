@@ -126,9 +126,6 @@ const formatDateTime = (date) => {
 }
 
 const AnnouncedCard = ({ announcement }) => {
-
-    console.log(announcement);
-
     const { classes, theme } = useStyles();
 
     return <>

@@ -10,12 +10,13 @@ import { loadClassWork } from '../../../redux/actions/classWork';
 
 const useStyles = createStyles((themes) => ({
     main_container: {
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center",
         backgroundColor: 'white',
-        padding: '2rem',
-        width: '50%',
-        marginLeft: '25%',
-        marginBottom: '25%',
-
+        width: '65vw',
+        margin: "0 auto",
+        padding: '2rem 1rem 1rem 1rem',
     },
 }));
 
@@ -26,6 +27,9 @@ const Classwork = () => {
     const { classes, theme } = useStyles();
     const params = useParams();
     const dispatch = useDispatch();
+
+    // console.log(params);
+
     useEffect(() => {
         // console.log("Stream");
         dispatch(loadClass(params.id));

@@ -4,8 +4,6 @@ export const createClassWork = (title, instructions, dueDate, points, topic, fil
     try {
         dispatch({ type: 'createClassWorkRequest' });
 
-        console.log(title, instructions, dueDate, points, topic, files, classRoom, assignedTo);
-
         const formData = new FormData();
 
         formData.append("title", title);
@@ -16,7 +14,11 @@ export const createClassWork = (title, instructions, dueDate, points, topic, fil
         formData.append("topic", topic);
         formData.append("classId", classRoom);
         formData.append("assignedTo", assignedTo);
-        formData.append("file", files[0]);
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+        }
+
 
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/classWork/createClassWork/`, {
             method: "POST",
@@ -29,21 +31,22 @@ export const createClassWork = (title, instructions, dueDate, points, topic, fil
         const status = res.status;
         const data = await res.json();
 
-        console.log(data, "data");
+        // console.log(data, "data");
+        // console.log(status);
 
-        if (status !== 200) {
+
+        if (status !== 201) {
             dispatch({
                 type: 'createClassWorkFail',
                 payload: data.error
             });
         }
-        if (status === 200) {
+        if (status === 201) {
             dispatch({
                 type: 'createClassWorkSuccess',
                 payload: data.classWork
             });
         }
-
 
     }
     catch (error) {

@@ -14,12 +14,13 @@ import { loadPeople } from "../../../redux/actions/people";
 
 const useStyles = createStyles((theme) => ({
     main_container: {
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center",
         backgroundColor: 'white',
-        padding: '2rem',
-        width: '56%',
-        marginLeft: "22%",
-        marginRight: "22%",
-
+        width: '65vw',
+        margin: "0 auto",
+        padding: '2rem 1rem 1rem 1rem',
     },
     container1: {
         backgroundColor: "white",

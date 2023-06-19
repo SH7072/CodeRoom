@@ -73,9 +73,7 @@ function App() {
               <ClassroomDashboard />
             } />
         </Route>
-        <Route
-          exact
-          path='class/:id'
+        <Route exact path='class/:id/'
           element={
             <Protected>
               <ClassLayout />

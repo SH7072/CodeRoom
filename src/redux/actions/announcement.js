@@ -6,10 +6,9 @@ export const createAnnouncement = (classId, instructions, files, assignedTo) => 
         formData.append('classId', classId);
         formData.append('description', instructions);
         formData.append('assignedTo', assignedTo);
-        // for (let i = 0; i < files.length; i++) {
-        //     formData.append('files', files[i]);
-        // }
-        formData.append('file', files[0]);
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
 
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/announcement/createAnnouncement`, {
             method: 'POST',
@@ -23,14 +22,15 @@ export const createAnnouncement = (classId, instructions, files, assignedTo) => 
         const data = await res.json();
 
         console.log(data, "data");
+        console.log(status);
 
-        if (status !== 200) {
+        if (status !== 201) {
             dispatch({
                 type: 'createAnnouncementFail',
                 payload: data.error
             });
         }
-        if (status === 200) {
+        if (status === 201) {
             dispatch({
                 type: 'createAnnouncementSuccess',
                 payload: data.announcement

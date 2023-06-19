@@ -10,7 +10,7 @@ const announcementReducer = createReducer({
     },
     createAnnouncementSuccess: (state, action) => {
         state.loading = false;
-        state.announcementList.push(action.payload);
+        state.announcementList = [action.payload, ...state.announcementList]
     },
     createAnnouncementFail: (state, action) => {
         state.loading = false;
