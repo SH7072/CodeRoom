@@ -1,7 +1,9 @@
 import { ActionIcon, Flex, Image, Text, UnstyledButton, createStyles, rem } from "@mantine/core";
+import { Document, PDFViewer, Page, View } from "@react-pdf/renderer";
 import { IconFile, IconFileMusic, IconFileSpreadsheet, IconFileText, IconFileZip, IconPdf, IconPhoto, IconPresentation, IconTxt, IconVideo, IconX } from "@tabler/icons-react";
+import { Checkbox } from "tabler-icons-react";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { size }) => ({
     actionIcon: {
         display: 'flex',
         alignItems: 'center',
@@ -18,11 +20,9 @@ const useStyles = createStyles((theme) => ({
     },
     button: {
         display: 'flex',
-        justifyContent: 'flex-start',
+        // justifyContent: 'space-between',
         alignItems: 'center',
-        // width: '100%',
-        // width: '48%',
-        width: '280px',
+        width: size == 'full' ? '100%' : '260px',
         transition: 'background-color 150ms ease, border-color 150ms ease',
         border: `${rem(1)} solid ${theme.colorScheme === 'dark'
             ? theme.colors.dark[8]
@@ -49,9 +49,23 @@ const useStyles = createStyles((theme) => ({
 const image = "https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80";
 
 
+const RenderPDF = ({ file }) => {
+    console.log(file, 'renderFile');
+    return (
+        <PDFViewer>
+            <Document file={file.url}>
+            </Document>
+        </PDFViewer>
+    )
+}
 
-const DisplayAttachment = ({ file }) => {
-    const { classes } = useStyles();
+
+const DisplayFile = ({ file, cancelSelection, size }) => {
+    const { classes } = useStyles({ size });
+
+    // URL.createObjectURL(file);
+
+    // console.log(file);
 
     const fileIcon = (() => {
         switch (file.type && file.type.split('/')[1]) {
@@ -80,11 +94,12 @@ const DisplayAttachment = ({ file }) => {
             case 'vnd.oasis.opendocument.presentation':
                 return <IconPresentation size="2rem" />;
             case 'jpeg':
-                return <IconPhoto size="2rem" />;
+                return file.url ? <Image src={file.url} size="2rem" /> : <Image src={URL.createObjectURL(file)} size="2rem" />;
+            // return <IconPhoto size="2rem" />;
             case 'png':
-                return <IconPhoto size="2rem" />;
+                return file.url ? <Image src={file.url} size="2rem" /> : <Image src={URL.createObjectURL(file)} size="2rem" />;
             case 'gif':
-                return <IconPhoto size="2rem" />;
+                return file.url ? <Image src={file.url} size="2rem" /> : <Image src={URL.createObjectURL(file)} size="2rem" />;
             case 'mp4':
                 return <IconVideo size="2rem" />;
             case 'mp3':
@@ -94,31 +109,34 @@ const DisplayAttachment = ({ file }) => {
         }
     })();
 
-    const handleClick = () => {
-        window.open(file.url, '_blank', 'rel=noopener noreferrer')
-    }
-
 
     return (
         <>
             <UnstyledButton
                 className={classes.button}
-                onClick={handleClick}
             >
                 <Flex w={'5rem'} h={'100%'} justify={'center'} align={'center'}>
                     {fileIcon}
                 </Flex>
+
                 <Flex sx={classes.fileInfoDisplay}>
-                    <Text weight={500} size="xs" sx={{ lineHeight: 1 }} mb={5}>
+                    {file.name && <Text weight={500} size="xs" sx={{ lineHeight: 1 }} mb={5}>
+                        {file.name}
+                    </Text>}
+                    {file.public_id && <Text weight={500} size="xs" sx={{ lineHeight: 1 }} mb={5}>
                         {file.public_id.split('-')[1]}
-                    </Text>
+                    </Text>}
                     <Text color="dimmed" size="sm" sx={{ lineHeight: 1 }}>
                         {file.type ? file.type.split('/')[1] : 'file'}
                     </Text>
                 </Flex>
+
+                <ActionIcon variant="subtle" sx={classes.actionIcon} size={'2rem'} onClick={() => cancelSelection(file)}>
+                    <IconX size="2rem" />
+                </ActionIcon>
             </UnstyledButton >
         </>
     );
 }
 
-export default DisplayAttachment;
+export default DisplayFile;

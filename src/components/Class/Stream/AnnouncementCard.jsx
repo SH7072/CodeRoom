@@ -4,11 +4,10 @@ import React from "react";
 import { DateInput } from '@mantine/dates';
 import { useState } from "react";
 import { BsArrowLeftRight, BsUpload, BsLink, BsCaretDownFill } from 'react-icons/bs';
-import TextAreaEditor from "../../Classwork/ClassworkComponents/TextAreaEditor";
-import DisplayFile from "../../Classwork/ClassworkComponents/DisplayFile";
+import TextAreaEditor from "../TextAreaEditor";
+import DisplayFile from "../../Layout/DisplayFile";
 import { useDispatch } from "react-redux";
-import { createAnnouncement } from "../../../../redux/actions/announcement";
-
+import { createAnnouncement } from "../../../redux/actions/announcement";
 
 const useStyles = createStyles((theme) => ({
     announcement_container: {
@@ -153,7 +152,7 @@ const AnnouncementCard = ({ classInfo, role }) => {
                     {files.length > 0 && <Flex direction={'column'} gap={'1rem'} pt={'1rem'}>
                         {
                             files.map((file, index) => {
-                                return <DisplayFile file={file} cancelSelection={cancelSelection} key={index}></DisplayFile>
+                                return <DisplayFile file={file} cancelSelection={cancelSelection} key={index} size={'full'}></DisplayFile>
                             })
                         }
                     </Flex>}

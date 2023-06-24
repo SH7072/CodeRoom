@@ -1,11 +1,12 @@
-import AccordionCard from './ClassworkComponents/AccordionCard'
-import CreateToggleButton from './ClassworkComponents/CreateToggleButton'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import AccordionCard from '../../../components/Class/Classwork/AccordionCard';
+import CreateToggleButton from '../../../components/Class/Classwork/CreateToggleButton';
 import { createStyles, Button, Flex, Menu } from "@mantine/core";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadClass } from '../../../redux/actions/class';
 import { loadClassWork } from '../../../redux/actions/classWork';
+import EditAssignmentModal from '../../../components/Class/Classwork/EditAssignmentModal';
 
 
 const useStyles = createStyles((themes) => ({
@@ -44,6 +45,15 @@ const Classwork = () => {
 
     // console.log(classWork);
 
+    const openEditModal = (classWorkInfo) => {
+        setClassWorkInfo((prevState) => ({ ...classWorkInfo }));
+        setOpened(true);
+    }
+
+    const [classWorkInfo, setClassWorkInfo] = useState(null);
+    const [opened, setOpened] = useState(false);
+
+
     return (
         <>
             {
@@ -53,13 +63,15 @@ const Classwork = () => {
                         <br />
                         {!classWorkLoading && classWork.length > 0 &&
                             classWork.map((item, index) => {
-                                return <AccordionCard classWork={item} key={index}></AccordionCard>
+                                return <AccordionCard classWork={item} key={index} openEditModal={openEditModal} role={role}></AccordionCard>
                             }
                             )
                         }
                     </div>
                 )
             }
+
+            {classWorkInfo && <EditAssignmentModal classWorkInfo={classWorkInfo} setClassWorkInfo={setClassWorkInfo} openedAssignmentModal={opened} setOpenedAssignmentModal={setOpened} ></EditAssignmentModal>}
         </>
     )
 }

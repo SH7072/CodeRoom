@@ -27,6 +27,28 @@ const classWorkReducer = createReducer({
         state.loading = false;
         state.error = action.payload;
     },
+    editClassWorkRequest: state => {
+        state.loading = true;
+    },
+    editClassWorkSuccess: (state, action) => {
+        state.loading = false;
+        state.classWork = state.classWork.map(classWork => classWork._id === action.payload._id ? action.payload : classWork);
+    },
+    editClassWorkFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    deleteClassWorkRequest: state => {
+        state.loading = true;
+    },
+    deleteClassWorkSuccess: (state, action) => {
+        state.loading = false;
+        state.classWork = state.classWork.filter(classWork => classWork._id !== action.payload._id);
+    },
+    deleteClassWorkFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
 });
 
 export default classWorkReducer;

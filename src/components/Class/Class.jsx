@@ -17,9 +17,9 @@ import {
     Button,
 } from '@mantine/core';
 import { forwardRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { archiveClass, editClass, loadClass, unenrollFromClass } from '../../redux/actions/class';
+import { archiveClass, editClass, unenrollFromClass } from '../../redux/actions/class';
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -130,9 +130,8 @@ const Options = forwardRef(({ ...others }, ref) => {
 
 
 const Class = ({ classInfo, user, role }) => {
-    const { classes, cx, theme } = useStyles();
+    const { classes } = useStyles();
     // const linkProps = { href: data.link };
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [editClassOpen, setEditClassOpen] = useState(false);

@@ -69,7 +69,7 @@ const useStyles = createStyles((theme) => ({
 
 }));
 
-const DescrioptionCard = ({ className }) => {
+const DescriptionCard = ({ className }) => {
 
     const { classes } = useStyles();
     const [opened, { open, close }] = useDisclosure(false);
@@ -104,4 +104,4 @@ const DescrioptionCard = ({ className }) => {
         </Modal>
     </>
 }
-export default DescrioptionCard;
+export default DescriptionCard;

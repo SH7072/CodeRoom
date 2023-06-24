@@ -4,8 +4,10 @@ import { BsThreeDotsVertical, BsPeopleFill } from 'react-icons/bs';
 import { TbArrowBigRight } from 'react-icons/tb';
 import ClassComment from "./ClassComment";
 import parse from 'html-react-parser';
-import DisplayFile from "../../Classwork/ClassworkComponents/DisplayFile";
-import DisplayAttachment from "../../DisplayAttachment";
+import DisplayFile from "../../Layout/DisplayFile";
+import DisplayAttachment from "../../Layout/DisplayAttachment";
+import { useDispatch } from "react-redux";
+import { deleteAnnouncement } from "../../../redux/actions/announcement";
 
 const useStyles = createStyles((theme) => ({
     announced_card_container: {
@@ -17,7 +19,7 @@ const useStyles = createStyles((theme) => ({
         borderRadius: "8px",
         border: "2px solid rgb(218, 220, 224)",
 
-        alignItems: "center",
+        // alignItems: "center",
         flexDirection: "column",
     },
     announced_section_1: {
@@ -125,8 +127,20 @@ const formatDateTime = (date) => {
 
 }
 
-const AnnouncedCard = ({ announcement }) => {
+const AnnouncedCard = ({ announcement, openEditAnnouncementModal }) => {
     const { classes, theme } = useStyles();
+    const dispatch = useDispatch();
+
+
+    const handleEdit = () => {
+        openEditAnnouncementModal(announcement);
+    }
+
+    const handleDelete = () => {
+        console.log("delete");
+        dispatch(deleteAnnouncement(announcement._id, announcement.classId))
+    }
+
 
     return <>
         <Flex className={classes.announced_card_container}>
@@ -143,8 +157,8 @@ const AnnouncedCard = ({ announcement }) => {
                         </Menu.Target>
                         <Menu.Dropdown>
                             <Menu.Item disabled>Move to top</Menu.Item>
-                            <Menu.Item>Edit</Menu.Item>
-                            <Menu.Item>Delete</Menu.Item>
+                            <Menu.Item onClick={handleEdit}>Edit</Menu.Item>
+                            <Menu.Item onClick={handleDelete}>Delete</Menu.Item>
                             <Menu.Item>Copy Link</Menu.Item>
                         </Menu.Dropdown>
                     </Menu>

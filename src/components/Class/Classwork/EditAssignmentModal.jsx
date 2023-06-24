@@ -1,12 +1,14 @@
 import { ActionIcon, Box, Button, FileButton, Flex, Group, Input, List, Modal, Select, Text, createStyles } from "@mantine/core";
 import { IconClipboardText, IconX } from "@tabler/icons-react";
-import TextAreaEditor from "./TextAreaEditor";
+import TextAreaEditor from "../TextAreaEditor";
 import { DateInput } from "@mantine/dates";
 import { useState } from "react";
 import DropzoneButton from "./DropzoneButton";
-import DisplayFile from "./DisplayFile";
-import { useDispatch } from "react-redux";
-import { createClassWork } from "../../../../redux/actions/classWork";
+import DisplayFile from "../../Layout/DisplayFile";
+import { useDispatch, useSelector } from "react-redux";
+import { createClassWork, editClassWork } from "../../../redux/actions/classWork";
+import DisplayAttachment from "../../Layout/DisplayAttachment";
+
 
 const useStyles = createStyles((theme) => ({
     modalHeader: {
@@ -88,31 +90,30 @@ const useStyles = createStyles((theme) => ({
 
 }));
 
-const AssignmentModal = ({ classInfo, openedAssignmentModal, setOpenedAssignmentModal }) => {
+const formatDate = (date) => {
+    if (!date) return null;
+    return new Date(date);
+}
+
+const EditAssignmentModal = ({ classWorkInfo, setClassWorkInfo, openedAssignmentModal, setOpenedAssignmentModal }) => {
 
     const { classes } = useStyles();
-    const [files, setFiles] = useState([]);
-    const [title, setTitle] = useState('');
-    const [instructions, setInstructions] = useState('');
-    const [classRoom, setClassRoom] = useState(classInfo._id);
+    const [files, setFiles] = useState(classWorkInfo.classWorkFile);
+    const [title, setTitle] = useState(classWorkInfo.title);
+    const [instructions, setInstructions] = useState(classWorkInfo.instructions);
+    const [classRoom, setClassRoom] = useState(classWorkInfo.classId);
     const [assignedTo, setAssignedTo] = useState([]);
-    const [dueDate, setDueDate] = useState(null);
-    const [points, setPoints] = useState(100);
-    const [topic, setTopic] = useState(null);
+    const [dueDate, setDueDate] = useState(formatDate(classWorkInfo.dueDate));
+    const [points, setPoints] = useState(classWorkInfo.classWorkMarks);
+    const [topic, setTopic] = useState(classWorkInfo.topic);
 
     const dispatch = useDispatch();
 
+    const classInfo = useSelector((state) => state.classes.classInfo);
 
     const closeAssignmentModal = () => {
-        setFiles([]);
-        setTitle('');
-        setInstructions('');
-        setClassRoom(classInfo._id);
-        setAssignedTo([]);
-        setDueDate(null);
-        setPoints(100);
-        setTopic(null);
         setOpenedAssignmentModal(!openedAssignmentModal);
+        setClassWorkInfo(null);
     };
 
     const cancelSelection = (file) => {
@@ -121,7 +122,7 @@ const AssignmentModal = ({ classInfo, openedAssignmentModal, setOpenedAssignment
     };
 
     const handleAssign = () => {
-        dispatch(createClassWork(
+        dispatch(editClassWork(
             title,
             instructions,
             dueDate,
@@ -130,9 +131,10 @@ const AssignmentModal = ({ classInfo, openedAssignmentModal, setOpenedAssignment
             files,
             classRoom,
             assignedTo,
+            classWorkInfo._id
         ));
         closeAssignmentModal();
-
+        setClassWorkInfo(null);
     };
 
     return (
@@ -183,7 +185,7 @@ const AssignmentModal = ({ classInfo, openedAssignmentModal, setOpenedAssignment
                                     </Input.Wrapper>
                                     <Flex direction='column' gap={'10px'}>
                                         {files.map((file, index) => (
-                                            <DisplayFile key={index} file={file} cancelSelection={cancelSelection} />
+                                            <DisplayFile key={index} file={file} size={'full'} cancelSelection={cancelSelection} />
                                         ))}
                                     </Flex>
                                 </Flex>
@@ -244,4 +246,4 @@ const AssignmentModal = ({ classInfo, openedAssignmentModal, setOpenedAssignment
     );
 }
 
-export default AssignmentModal;
+export default EditAssignmentModal;

@@ -1,24 +1,17 @@
-import { createStyles, Button, Flex, Menu } from "@mantine/core";
-
 import React, { useEffect } from "react";
-
+import { createStyles, Button, Flex, Menu } from "@mantine/core";
 import { useState } from "react";
-
-
-
 import { BsThreeDotsVertical, BsLink } from 'react-icons/bs';
-
-import AnnouncementCard from "./StreamComponents/AnnouncementCard";
-
-import DescrioptionCard from "./StreamComponents/DescriptionCard";
-
-import AnnouncedCard from "./StreamComponents/AnnouncedCard";
-
-import ScheduleAnnouncement from "./StreamComponents/ScheduledAnnouncement";
+import AnnouncementCard from "../../../components/Class/Stream/AnnouncementCard";
+import DescriptionCard from "../../../components/Class/Stream/DescriptionCard";
 import { loadClass } from "../../../redux/actions/class";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAnnouncements } from "../../../redux/actions/announcement";
+import EditAnnouncementModal from "../../../components/Class/Stream/EditAnnouncementModal";
+import AnnouncedCard from "../../../components/Class/Stream/AnnouncedCard";
+import ScheduleAnnouncement from "../../../components/Class/Stream/ScheduledAnnouncement";
+
 const useStyles = createStyles((theme) => ({
     main_container: {
         display: "flex",
@@ -117,13 +110,22 @@ const Stream = () => {
     const role = useSelector((state) => { return state.classes.role });
     // console.log(classInfo, "classInfo");
 
+    const [openAnnouncementModal, setOpenAnnouncementModal] = useState(false);
+    const [announcementInfo, setAnnouncementInfo] = useState(null);
+
+    const openEditAnnouncementModal = (announcement) => {
+        setAnnouncementInfo(announcement);
+        setOpenAnnouncementModal(true);
+    }
+
+
 
     return <>
         {
             !loading && classInfo &&
 
             <div className={classes.main_container}>
-                <DescrioptionCard className={classInfo.className} ></DescrioptionCard>
+                <DescriptionCard className={classInfo.className} ></DescriptionCard>
 
                 <Flex>
                     <Flex style={{ flexDirection: "column" }} className={classes.container1}>
@@ -186,11 +188,19 @@ const Stream = () => {
                         <ScheduleAnnouncement></ScheduleAnnouncement>
                         {
                             !announcementsLoading && announcements && announcements.map((announcement, index) => {
-                                return <AnnouncedCard announcement={announcement} key={index}></AnnouncedCard>
+                                return <AnnouncedCard announcement={announcement} openEditAnnouncementModal={openEditAnnouncementModal} key={index} ></AnnouncedCard>
                             })
                         }
                     </Flex>
                 </Flex >
+
+                {announcementInfo && <EditAnnouncementModal
+                    announcementInfo={announcementInfo}
+                    setAnnouncementInfo={setAnnouncementInfo}
+                    openAnnouncementModal={openAnnouncementModal}
+                    setOpenAnnouncementModal={setOpenAnnouncementModal}
+                    role={role}
+                ></EditAnnouncementModal>}
 
             </div >
         }

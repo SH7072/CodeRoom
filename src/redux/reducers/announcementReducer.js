@@ -27,6 +27,33 @@ const announcementReducer = createReducer({
         state.loading = false;
         state.error = action.payload;
     },
+    editAnnouncementRequest: (state, action) => {
+        state.loading = true;
+    },
+    editAnnouncementSuccess: (state, action) => {
+        state.loading = false;
+        state.announcementList = state.announcementList.map(announcement => {
+            if (announcement._id === action.payload._id) {
+                return action.payload
+            }
+            return announcement;
+        })
+    },
+    editAnnouncementFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    deleteAnnouncementRequest: (state, action) => {
+        state.loading = true;
+    },
+    deleteAnnouncementSuccess: (state, action) => {
+        state.loading = false;
+        state.announcementList = state.announcementList.filter(announcement => announcement._id !== action.payload._id);
+    },
+    deleteAnnouncementFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
 });
 
 export default announcementReducer;

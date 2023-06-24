@@ -3,25 +3,21 @@ import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
-  Link,
   Route,
   createRoutesFromElements,
-  Outlet,
-  Routes
 } from "react-router-dom";
-import Signup from "./pages/Signup/Signup"
-import Login from "./pages/Login/Login"
-import ClassroomNavbar from './components/Navbar/ClassroomNavbar';
+import Signup from "./pages/Signup/Signup";
+import Login from "./pages/Login/Login";
 import ClassroomDashboard from './pages/Classroom/ClassroomDashboard';
-import Stream from './components/Class/Stream/Stream';
-import Classwork from './components/Class/Classwork/Classwork';
+import Stream from './pages/Class/Stream/Stream';
+import Classwork from "./pages/Class/Classwork/Classwork";
 import HomeLayout from './components/Layout/HomeLayout';
 import Root from './components/Layout/Root';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './redux/actions/user';
 import ClassLayout from './components/Layout/ClassLayout';
 import Protected from './Protected';
-import People from './components/Class/People/People';
+import People from './pages/Class/People/People';
 
 
 

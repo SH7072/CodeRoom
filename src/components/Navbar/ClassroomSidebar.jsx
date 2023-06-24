@@ -80,13 +80,13 @@ const data = [
     { link: '/', label: 'Databases', icon: IconDatabaseImport },
     { link: '/', label: 'Authentication', icon: Icon2fa },
     { link: '/', label: 'Other Settings', icon: IconSettings },
-    { link: '/', label: 'Notifications', icon: IconBellRinging },
-    { link: '/', label: 'Billing', icon: IconReceipt2 },
-    { link: '/', label: 'Security', icon: IconFingerprint },
-    { link: '/', label: 'SSH Keys', icon: IconKey },
-    { link: '/', label: 'Databases', icon: IconDatabaseImport },
-    { link: '/', label: 'Authentication', icon: Icon2fa },
-    { link: '/', label: 'Other Settings', icon: IconSettings },
+    { link: '/', label: 'Notsdsifications', icon: IconBellRinging },
+    { link: '/', label: 'Bilsdsdling', icon: IconReceipt2 },
+    { link: '/', label: 'Secsdurity', icon: IconFingerprint },
+    { link: '/', label: 'SSH Ksdseys', icon: IconKey },
+    { link: '/', label: 'Databasesds', icon: IconDatabaseImport },
+    { link: '/', label: 'Authenticasdstion', icon: Icon2fa },
+    { link: '/', label: 'Other Settinsdsgs', icon: IconSettings },
 ];
 
 const ClassroomSidebar = () => {
