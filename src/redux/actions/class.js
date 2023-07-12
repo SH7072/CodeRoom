@@ -261,7 +261,7 @@ export const archiveClass = (classId) => async dispatch => {
         dispatch({ type: 'archiveClassRequest' });
 
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/archiveClass/${classId}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem('token')}`,
@@ -297,4 +297,47 @@ export const archiveClass = (classId) => async dispatch => {
             payload: error.message
         });
     }
-}
+};
+
+export const unarchiveClass = (classId) => async dispatch => {
+    try {
+        dispatch({ type: 'unarchiveClassRequest' });
+
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/unarchiveClass/${classId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+
+        const status = res.status;
+        const data = await res.json();
+
+        console.log(data, "data");
+
+        if (status !== 200) {
+            dispatch({
+                type: 'unarchiveClassFail',
+                payload: data.error
+            });
+        }
+        if (status === 200) {
+            dispatch({
+                type: 'unarchiveClassSuccess',
+                payload: classId
+            });
+            // dispatch({
+            //     type: 'removeClassesAsStudent',
+            //     payload: classId
+            // });
+            // navigate('/');
+        }
+    }
+    catch (error) {
+        dispatch({
+            type: 'unarchiveClassFail',
+            payload: error.message
+        });
+    }
+};

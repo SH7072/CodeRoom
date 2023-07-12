@@ -19,7 +19,7 @@ import {
 import { forwardRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { archiveClass, editClass, unenrollFromClass } from '../../redux/actions/class';
+import { archiveClass, editClass, unarchiveClass, unenrollFromClass } from '../../redux/actions/class';
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -129,7 +129,7 @@ const Options = forwardRef(({ ...others }, ref) => {
 });
 
 
-const Class = ({ classInfo, user, role }) => {
+const Class = ({ classInfo, user, role, isArchived }) => {
     const { classes } = useStyles();
     // const linkProps = { href: data.link };
     const dispatch = useDispatch();
@@ -161,6 +161,11 @@ const Class = ({ classInfo, user, role }) => {
     const handleArchiveClass = () => {
         console.log('archive');
         dispatch(archiveClass(classInfo._id));
+    }
+
+    const handleUnarchiveClass = () => {
+        console.log('unarchive');
+        dispatch(unarchiveClass(classInfo._id));
     }
 
 
@@ -196,9 +201,15 @@ const Class = ({ classInfo, user, role }) => {
                                     Unenroll
                                 </Menu.Item>
                             }
-                            <Menu.Item onClick={handleArchiveClass}>
-                                Archive
-                            </Menu.Item>
+                            {
+                                isArchived ?
+                                    <Menu.Item onClick={handleUnarchiveClass}>
+                                        Unarchive
+                                    </Menu.Item> :
+                                    <Menu.Item onClick={handleArchiveClass}>
+                                        Archive
+                                    </Menu.Item>
+                            }
                         </Menu.Dropdown>
                     </Menu>
 

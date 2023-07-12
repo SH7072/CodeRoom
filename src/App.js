@@ -18,6 +18,7 @@ import { loadUser } from './redux/actions/user';
 import ClassLayout from './components/Layout/ClassLayout';
 import Protected from './Protected';
 import People from './pages/Class/People/People';
+import CodeEditor from './pages/CodeEditor/CodeEditor';
 
 
 
@@ -66,7 +67,31 @@ function App() {
           <Route
             index
             element={
-              <ClassroomDashboard />
+              <ClassroomDashboard isArchived={false} />
+            } />
+        </Route>
+        <Route
+          path='archived'
+          element={
+            <Protected>
+              <HomeLayout />
+            </Protected>}>
+          <Route
+            index
+            element={
+              <ClassroomDashboard isArchived={true} />
+            } />
+        </Route>
+        <Route
+          path='code-editor'
+          element={
+            <Protected>
+              <HomeLayout />
+            </Protected>}>
+          <Route
+            index
+            element={
+              <CodeEditor />
             } />
         </Route>
         <Route exact path='class/:id/'

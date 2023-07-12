@@ -12,6 +12,7 @@ import {
     IconLogout,
     IconHome,
     IconSourceCode,
+    IconArchive,
 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
@@ -119,10 +120,15 @@ const ClassroomSidebar = () => {
                             <IconHome className={classes.linkIcon} stroke={1.5} />
                             <span>Classes</span>
                         </Link>
-                        {/* <Link> href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                        <Link to={'/archived'} className={classes.link}>
+                            <IconArchive className={classes.linkIcon} stroke={1.5} />
+                            <span>Archived Classes</span>
+                        </Link>
+                        <Link to={"/classroom"} className={classes.link}>
                             <IconSourceCode className={classes.linkIcon} stroke={1.5} />
                             <span>Code Editor</span>
-                        </Link> */}
+                        </Link>
+
                     </Flex>
 
                     <Flex direction='column'>

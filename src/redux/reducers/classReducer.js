@@ -114,6 +114,30 @@ const classReducer = createReducer({
         state.loading = false;
         state.error = action.payload;
     },
+    unarchiveClassRequest: state => {
+        state.loading = true;
+    },
+    unarchiveClassSuccess: (state, action) => {
+        state.loading = false;
+        state.classes.classesAsTeacher = state.classes.classesAsTeacher.filter((class_) => {
+            if (class_.classId._id === action.payload) {
+                class_.isArchived = false;
+            }
+            return class_;
+        }
+        );
+        state.classes.classesAsStudent = state.classes.classesAsStudent.filter((class_) => {
+            if (class_.classId._id === action.payload) {
+                class_.isArchived = false;
+            }
+            return class_;
+        }
+        );
+    },
+    unarchiveClassFail: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
 });
 
 export default classReducer;

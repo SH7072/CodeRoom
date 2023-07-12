@@ -7,7 +7,7 @@ import { getAllClassRooms } from '../../redux/actions/class';
 import store from '../../redux/store';
 
 
-const ClassroomDashboard = () => {
+const ClassroomDashboard = ({ isArchived }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllClassRooms());
@@ -62,7 +62,7 @@ const ClassroomDashboard = () => {
             <Flex wrap={'wrap'}>
                 {classes &&
                     classes.classesAsTeacher.filter((class_) => {
-                        return class_.isArchived === false
+                        return class_.isArchived === isArchived;
                     }).sort((a, b) => {
                         return new Date(b.date) - new Date(a.date);
                     }).map((class_) => {
@@ -72,13 +72,14 @@ const ClassroomDashboard = () => {
                                 classInfo={class_.classId}
                                 user={user}
                                 role={getRole(class_.classId)}
+                                isArchived={isArchived}
                             />
                         )
                     })
                 }
                 {classes &&
                     classes.classesAsStudent.filter((class_) => {
-                        return class_.isArchived === false;
+                        return class_.isArchived === isArchived;
                     }).sort((a, b) => {
                         return new Date(b.date) - new Date(a.date);
                     }).map((class_) => {
@@ -88,6 +89,7 @@ const ClassroomDashboard = () => {
                                 classInfo={class_.classId}
                                 user={user}
                                 role={getRole(class_.classId)}
+                                isArchived={isArchived}
                             />
                         )
                     }
