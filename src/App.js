@@ -19,6 +19,7 @@ import ClassLayout from './components/Layout/ClassLayout';
 import Protected from './Protected';
 import People from './pages/Class/People/People';
 import CodeEditor from './pages/CodeEditor/CodeEditor';
+import { MantineProvider } from '@mantine/core';
 
 
 
@@ -83,7 +84,7 @@ function App() {
             } />
         </Route>
         <Route
-          path='code-editor'
+          path='code-editor/:roomId'
           element={
             <Protected>
               <HomeLayout />
@@ -91,7 +92,9 @@ function App() {
           <Route
             index
             element={
-              <CodeEditor />
+              <MantineProvider theme={{ colorScheme: 'dark' }}>
+                <CodeEditor />
+              </MantineProvider>
             } />
         </Route>
         <Route exact path='class/:id/'
