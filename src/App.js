@@ -19,7 +19,8 @@ import ClassLayout from './components/Layout/ClassLayout';
 import Protected from './Protected';
 import People from './pages/Class/People/People';
 import CodeEditor from './pages/CodeEditor/CodeEditor';
-import ViewAssignment from './components/Class/Classwork/ViewAssignment'; import { MantineProvider } from '@mantine/core';
+import ViewAssignment from './components/Class/Classwork/ViewAssignment';
+import { MantineProvider } from '@mantine/core';
 
 
 
