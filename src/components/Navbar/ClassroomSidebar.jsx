@@ -124,7 +124,7 @@ const ClassroomSidebar = () => {
                             <IconArchive className={classes.linkIcon} stroke={1.5} />
                             <span>Archived Classes</span>
                         </Link>
-                        <Link to={"/classroom"} className={classes.link}>
+                        <Link to={"/code-editor/1"} className={classes.link}>
                             <IconSourceCode className={classes.linkIcon} stroke={1.5} />
                             <span>Code Editor</span>
                         </Link>
