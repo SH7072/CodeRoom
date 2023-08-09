@@ -98,7 +98,7 @@ const useStyles = createStyles((theme) => ({
 const PostedAssignmentAccordItem = () => {
     const { classes, theme } = useStyles();
     return <>
-        <Accordion.Item value="a" style={{ padding: "0px", border: "0px", marginBottom: "2rem", boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px", }}
+        <Accordion.Item value="a" style={{ padding: "0px", border: "0px", marginBottom: "2rem", borderRadius: "10px", boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px", }}
 
         >
             <Accordion.Control style={{ backgroundColor: "", borderRadius: "0px", }} >
