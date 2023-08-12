@@ -88,7 +88,7 @@ const useStyles = createStyles((themes) => ({
         // border: "1px solid black",
         width: "90%",
         justifyContent: "space-between",
-        paddingLeft: "3rem",
+        paddingLeft: "2rem",
         color: "gray",
         fontFamily: "sans-serif",
         fontWeight: "",
