@@ -19,6 +19,8 @@ import ClassLayout from './components/Layout/ClassLayout';
 import Protected from './Protected';
 import People from './pages/Class/People/People';
 import CodeEditor from './pages/CodeEditor/CodeEditor';
+import ViewAssignment from './components/Class/Classwork/ViewAssignment';
+import PostedAssignment from './components/Class/Classwork/PostedAssignment';
 import { MantineProvider } from '@mantine/core';
 import CodeEditorMainView from './pages/CodeEditor/CodeEditorMainView';
 
@@ -100,6 +102,8 @@ function App() {
           <Route exact path='stream' element={<Stream />} />
           <Route exact path='classwork' element={<Classwork />} />
           <Route exact path='people' element={<People />} />
+          <Route exact path='viewAssignment' element={<ViewAssignment />} />
+          <Route exact path='postedAssignment' element={<PostedAssignment />} />
         </Route>
       </Route>
     ));

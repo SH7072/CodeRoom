@@ -47,6 +47,54 @@ const useStyles = createStyles((themes) => ({
         flexDirection: "column",
 
     },
+    view_instruction_box: {
+        // height: "2rem",
+        // padding: "1rem",
+        // border: "1px solid black",
+        marginTop: "11px",
+        backgroundColor: "",
+        // borderBottomLeftRadius: ".8rem",
+        // borderBottomRightRadius: ".8rem",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderTop: "1px solid #D1D1D1",
+        padding: "2px",
+        paddingTop: "16px",
+
+
+
+
+    },
+
+    ViewInstruction_anchor: {
+        color: "black",
+        textDecoration: "none",
+        fontFamily: "sans-serif",
+        fontWeight: "bold",
+    },
+
+    acc_panel_box: {
+        padding: "0px",
+        border: "0px",
+        borderBottomLeftRadius: "10px",
+        borderBottomRightRadius: "10px",
+        backgroundColor: "white",
+        borderTop: "1px solid #D1D1D1",
+
+
+
+    },
+    posted_and_graded_row: {
+        // border: "1px solid black",
+        width: "90%",
+        justifyContent: "space-between",
+        paddingLeft: "2rem",
+        color: "gray",
+        fontFamily: "sans-serif",
+        fontWeight: "",
+        fontSize: "1rem",
+
+    },
 
 }));
 
@@ -80,9 +128,10 @@ const AccordionCard = ({ classWork, openEditModal, role }) => {
         <div className={classes.accordion_card_container} >
 
             <Accordion variant="contained"
+                style={{}}
                 chevron={<IconArticleFilledFilled size={0} />}>
-                <Accordion.Item value="Assignments">
-                    <Accordion.Control icon={<IconArticleFilledFilled size={40} />}>
+                <Accordion.Item value="Assignments" style={{ borderRadius: "10px" }} >
+                    <Accordion.Control style={{ backgroundColor: "#F9F9F9" }} icon={<IconArticleFilledFilled size={40} />}>
 
                         <Flex className={classes.accordion_section}>
                             <Flex className={classes.assignment_heading}>
@@ -107,7 +156,28 @@ const AccordionCard = ({ classWork, openEditModal, role }) => {
                         </Flex>
                     </Accordion.Control>
 
-                    {classWork.instructions && <Accordion.Panel> {parse(classWork.instructions)}</Accordion.Panel>}
+                    {classWork.instructions &&
+                        <Accordion.Panel className={classes.acc_panel_box}>
+
+
+                            <Flex className={classes.content_container}>
+                                <Flex style={{ flexDirection: "column", width: "100%", }}>
+                                    <Flex className={classes.posted_and_graded_row}>
+                                        <p>posted Apr 13</p>
+                                        <p>graded</p>
+                                    </Flex>
+                                    <Flex style={{ width: "", paddingLeft: "2rem", paddingRight: "2rem", flexDirection: "column" }}>
+                                        {parse(classWork.instructions)}
+                                    </Flex>
+
+                                </Flex>
+
+                            </Flex>
+                            <Flex className={classes.view_instruction_box}>
+                                <Flex><a href="" className={classes.ViewInstruction_anchor}>View Instructions</a></Flex>
+
+                            </Flex>
+                        </Accordion.Panel>}
                 </Accordion.Item>
             </Accordion>
 
