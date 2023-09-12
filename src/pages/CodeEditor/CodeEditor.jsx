@@ -30,9 +30,12 @@ const CodeEditor = ({ user, roomId }) => {
         //     isAdmin: true,
         // },
     });
-    const [decorations, setDecorations] = useState({
-        // 'user1': [],
-    });
+    // const [decorations, setDecorations] = useState({
+    //     // 'user1': [],
+    // });
+
+    let decorations = {};
+
     const [contentWidgets, setContentWidgets] = useState({
         // 'user1': {
         //     position: {
@@ -43,27 +46,38 @@ const CodeEditor = ({ user, roomId }) => {
     // const [isSocket, setIsSocket] = useState(false);
     let isSocket = false;
 
-    console.log(users);
-    console.log(decorations);
+    // console.log(users);
+    // console.log(decorations);
     // console.log(isSocket);
 
 
     function insertWidget(data) {
         // console.log(data);
         if (monaco) {
-            // const model = monaco.editor.getModels()[0];
-            // decorations[data.userId] =
-            //     model.deltaDecorations([], [
-            //         {
-            //             range: new monaco.Range(data.userCursorPos['startLineNumber'], data.userCursorPos['startColumn'], data.userCursorPos['endLineNumber'], data.userCursorPos['endColumn']),
-            //             options: {
-            //                 className: data.userColor,
-            //                 hoverMessage: {
-            //                     value: data.userName,
-            //                 }
-            //             }
-            //         },
-            //     ]);
+            const model = monaco.editor.getModels()[0];
+
+
+            let decorationData =
+                model.deltaDecorations([], [
+                    {
+                        range: new monaco.Range(data.userCursorPos['startLineNumber'], data.userCursorPos['startColumn'], data.userCursorPos['endLineNumber'], data.userCursorPos['endColumn']),
+                        options: {
+                            className: data.userColor,
+                            hoverMessage: {
+                                value: data.userName,
+                            }
+                        }
+                    },
+                ]);
+
+            console.log(decorationData);
+            decorations[data.userId] = decorationData;
+            console.log(decorations);
+            // setDecorations(prev => {
+            //     let newDecorations = prev;
+            //     newDecorations[data.userId] = decorationData;
+            //     return newDecorations;
+            // });
         }
 
         // contentWidgets[data.userId] = {
@@ -75,10 +89,38 @@ const CodeEditor = ({ user, roomId }) => {
         //         // endLineNumber: data.userCursorPos['endLineNumber'],
         //         // endColumn: data.userCursorPos['endColumn'],
         //     },
-        //     // },
+        //  };
 
-        // }
+        // setContentWidgets(prev => {
+        //     let newContentWidgets = prev;
+        //     newContentWidgets[data.userId] = {
+        //         position: {
+        //             lineNumber: data.userCursorPos['endLineNumber'],
+        //             column: data.userCursorPos['endColumn'],
+        //             // startLineNumber: data.userCursorPos['startLineNumber'],
+        //             // startColumn: data.userCursorPos['startColumn'],
+        //             // endLineNumber: data.userCursorPos['endLineNumber'],
+        //             // endColumn: data.userCursorPos['endColumn'],
+        //         },
+        //     }
+        //     return newContentWidgets;
+        // });
     }
+
+    // function changeWidgetPosition({ userId, changes }) {
+
+
+    //     contentWidgets[userId].position.lineNumber = changes.range.endLineNumber;
+    //     contentWidgets[userId].position.column = changes.range.endColumn;
+
+    //     // monaco.editor.getModels()[0].addContentWidget(contentWidgets[userId]);
+    //     // monaco.editor.getModels()[0].removeContentWidget(contentWidgets[userId]);
+    //     monaco.addContentWidget(contentWidgets[userId]);
+    //     monaco.removeContentWidget(contentWidgets[userId]);
+    // }
+
+    // console.log(contentWidgets);
+
 
     function changeSelection({ userId, userColor, userName, changes }) {
         if (monaco) {
@@ -116,7 +158,7 @@ const CodeEditor = ({ user, roomId }) => {
             //             range: data,
             //             options: {
             //                 className: `${e.user}one`,
-            //                 hoverMessage: {
+            //                   hoverMessage: {
             //                     value: e.user
             //                 }
             //             }
@@ -134,10 +176,26 @@ const CodeEditor = ({ user, roomId }) => {
             // }
 
             // console.log(selectionArray);
+            // console.log(contentWidgets);
+
+            // changeWidgetPosition({ userId, changes: changes });
+
+            console.log(decorations);
+            console.log(users);
+
             const model = monaco.editor.getModels()[0];
-            decorations[userId] =
+
+
+            let decorationData =
                 model.deltaDecorations(decorations[userId], selectionArray);
 
+            console.log(decorationData);
+            decorations[userId] = decorationData;
+            // setDecorations(prev => {
+            //     let newDecorations = prev;
+            //     newDecorations[userId] = decorationData;
+            //     return newDecorations;
+            // });
 
             // model.deltaDecorations(decorations[userId], [
             //     {
@@ -153,19 +211,12 @@ const CodeEditor = ({ user, roomId }) => {
         }
     };
 
-    function changeWidgetPosition({ userId, changes }) {
-        contentWidgets[userId].position.lineNumber = changes[0].range.endLineNumber
-        contentWidgets[userId].position.column = changes[0].range.endColumn
-
-        monaco.editor.removeContentWidget(contentWidgets[userId])
-        monaco.editor.addContentWidget(contentWidgets[userId])
-    }
 
 
     function changeText({ userId, code }) {
         // console.log(code);
         if (monaco) {
-            console.log(code.changes);
+            // console.log(code.changes);
             setUsers((prev) => {
                 let newUsers = prev;
                 newUsers[userId] = {
@@ -181,7 +232,7 @@ const CodeEditor = ({ user, roomId }) => {
 
             monaco.editor.getModels()[0].applyEdits(code.changes) //change Content
             changeSelection({ userId, userColor: users[userId].userColor, userName: users[userId].userName, changes: code.changes[0] })
-            // changeWidgetPosition({ userId, changes: code.changes });
+
             // if (monaco.editor)
             // monaco.editor.getModel().applyEdits(code.changes) //change Content
             // setValue()
@@ -241,7 +292,12 @@ const CodeEditor = ({ user, roomId }) => {
                     if (data[i].userId !== user._id) {
                         insertWidget(data[i]);
                     }
-                    decorations[data[i].userId] = []
+                    // decorations[data[i].userId] = []
+                    // setDecorations(prev => {
+                    //     let newDecorations = prev;
+                    //     newDecorations[data[i].userId] = [];
+                    //     return newDecorations;
+                    // });
                 }
 
 
@@ -268,12 +324,13 @@ const CodeEditor = ({ user, roomId }) => {
         });
 
         socket.on('code-change-transfer', ({ userId, code }) => {
-            console.log(code, userId, user._id, 'code-change-transfer');
+            // console.log(code, userId, user._id, 'code-change-transfer');
             // setIsSocket(prev => true);
             isSocket = true;
             // console.log(isSocket, 'inside code-change-transfer');
             changeText({ userId, code });
-            console.log(users);
+            // console.log(users);
+            console.log(decorations);
         });
 
         socket.on('coderoom:cursor-change', (data) => {
