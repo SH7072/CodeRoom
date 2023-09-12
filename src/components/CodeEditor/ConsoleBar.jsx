@@ -10,14 +10,14 @@ const useStyles = createStyles(({ colorTheme }) => ({
 
 }));
 
-const ConsoleBar = ({ theme: colorTheme, editorRef, ...props }) => {
+const ConsoleBar = ({ theme: colorTheme, monaco, ...props }) => {
 
     // console.log(colorTheme);
     const { classes } = useStyles(colorTheme);
 
 
     const handleRunCode = () => {
-        alert(editorRef?.current?.getValue());
+        alert(monaco.editor.getValue());
     }
 
     return (

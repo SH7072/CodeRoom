@@ -20,14 +20,7 @@ import Protected from './Protected';
 import People from './pages/Class/People/People';
 import CodeEditor from './pages/CodeEditor/CodeEditor';
 import { MantineProvider } from '@mantine/core';
-
-
-
-
-
-
-
-
+import CodeEditorMainView from './pages/CodeEditor/CodeEditorMainView';
 
 
 function App() {
@@ -93,7 +86,7 @@ function App() {
             index
             element={
               <MantineProvider theme={{ colorScheme: 'dark' }}>
-                <CodeEditor />
+                <CodeEditorMainView />
               </MantineProvider>
             } />
         </Route>

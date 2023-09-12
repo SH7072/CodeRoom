@@ -32,7 +32,29 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.goldenRod {
+  background: #DDFFAA;
+  width: 2px !important;
+}
+
+.robinBlue {
+  background: #95E0C8;
+  width: 2px !important;
+}
+
+.copper {
+  background: #E18060;
+  width: 2px !important;
+}
+
+.peach {
+  background: #FFCBA4;
+  width: 2px !important;
 }

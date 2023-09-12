@@ -9,13 +9,13 @@ import { MantineProvider } from '@mantine/core';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {/* <MantineProvider theme={{ colorScheme: 'dark' }}> */}
-      <App />
-      {/* </MantineProvider> */}
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    {/* <MantineProvider theme={{ colorScheme: 'dark' }}> */}
+    <App />
+    {/* </MantineProvider> */}
+  </Provider>
+  // </React.StrictMode>
 );
 
 

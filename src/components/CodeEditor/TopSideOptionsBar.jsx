@@ -12,13 +12,13 @@ const useStyles = createStyles(({ colorTheme }) => ({
 
 }));
 
-const TopSideOptionsbar = ({ colorTheme, editorRef, language, setLanguage, ...props }) => {
+const TopSideOptionsbar = ({ colorTheme, monaco, language, setLanguage, ...props }) => {
 
     const { classes } = useStyles(colorTheme);
 
     const handleLanguageChange = (lan) => {
         setLanguage(lan);
-        editorRef?.monaco?.editor.setModelLanguage(editorRef?.current?.getModel(), lan);
+        monaco.editor.setModelLanguage(monaco.editor.getModel(), lan);
         // console.log(editorRef?.current?.getModel().getLanguageId());
     }
 
