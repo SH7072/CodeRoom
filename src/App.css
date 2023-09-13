@@ -58,3 +58,19 @@
   background: #FFCBA4;
   width: 2px !important;
 }
+
+.goldenRodSelection {
+  background-color: rgb(221, 255, 170, 0.4);
+}
+
+.robinBlueSelection {
+  background-color: rgb(149, 224, 200, 0.3);
+}
+
+.copperSelection {
+  background-color: rgb(225, 128, 96, 0.4);
+}
+
+.peachSelection {
+  background-color: rgb(255, 203, 164, 0.4);
+}

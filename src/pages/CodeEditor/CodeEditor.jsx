@@ -107,78 +107,76 @@ const CodeEditor = ({ user, roomId }) => {
         // });
     }
 
-    // function changeWidgetPosition({ userId, changes }) {
+    function changeWidgetPosition({ userId, selection }) {
 
+        contentWidgets[userId].position.lineNumber = selection.selection.endLineNumber;
+        contentWidgets[userId].position.column = selection.selection.endColumn;
 
-    //     contentWidgets[userId].position.lineNumber = changes.range.endLineNumber;
-    //     contentWidgets[userId].position.column = changes.range.endColumn;
-
-    //     // monaco.editor.getModels()[0].addContentWidget(contentWidgets[userId]);
-    //     // monaco.editor.getModels()[0].removeContentWidget(contentWidgets[userId]);
-    //     monaco.addContentWidget(contentWidgets[userId]);
-    //     monaco.removeContentWidget(contentWidgets[userId]);
-    // }
+        // monaco.editor.getModels()[0].addContentWidget(contentWidgets[userId]);
+        // monaco.editor.getModels()[0].removeContentWidget(contentWidgets[userId]);
+        monaco.editor.getEditors()[0].addContentWidget(contentWidgets[userId]);
+        monaco.editor.getEditors()[0].removeContentWidget(contentWidgets[userId]);
+    }
 
     // console.log(contentWidgets);
 
 
-    function changeSelection({ userId, userColor, userName, changes }) {
+    function changeSelection({ userId, userColor, userName, selection }) {
         if (monaco) {
             // console.log(monacoRef.current.editor);
             // console.log(monaco.editor.getModels());
 
             let selectionArray = []
-            if (changes.range.startColumn == changes.range.endColumn && changes.range.startLineNumber == changes.range.endLineNumber) { //if cursor - 커서일 때
-                changes.range.endColumn++;
-                changes.range.startColumn++
+            if (selection.selection.startColumn == selection.selection.endColumn && selection.selection.startLineNumber == selection.selection.endLineNumber) { //if cursor 
+                selection.selection.endColumn++;
                 selectionArray.push({
-                    range: changes.range,
+                    range: selection.selection,
                     options: {
-                        className: `${userColor}`,
+                        className: userColor,
                         hoverMessage: {
                             value: userName
                         }
                     }
                 })
 
-            } else {    //if selection - 여러개를 선택했을 때
+            } else {    //if selection 
                 selectionArray.push({
-                    range: changes.range,
+                    range: selection.selection,
                     options: {
-                        className: `${userColor}`,
+                        className: `${userColor}Selection`,
                         hoverMessage: {
                             value: userName
                         }
                     }
                 })
             }
-            // for (let data of e.secondarySelections) {       //if select multi - 여러개를 선택했을 때
-            //     if (data.startColumn == data.endColumn && data.startLineNumber == data.endLineNumber) {
-            //         selectionArray.push({
-            //             range: data,
-            //             options: {
-            //                 className: `${e.user}one`,
-            //                   hoverMessage: {
-            //                     value: e.user
-            //                 }
-            //             }
-            //         })
-            //     } else
-            //         selectionArray.push({
-            //             range: data,
-            //             options: {
-            //                 className: e.user,
-            //                 hoverMessage: {
-            //                     value: e.user
-            //                 }
-            //             }
-            //         })
-            // }
+            for (let data of selection.secondarySelections) {       //if select multi - 여러개를 선택했을 때
+                if (data.startColumn == data.endColumn && data.startLineNumber == data.endLineNumber) {
+                    selectionArray.push({
+                        range: data,
+                        options: {
+                            className: userColor,
+                            hoverMessage: {
+                                value: userName
+                            }
+                        }
+                    })
+                } else
+                    selectionArray.push({
+                        range: data,
+                        options: {
+                            className: userColor,
+                            hoverMessage: {
+                                value: userName
+                            }
+                        }
+                    })
+            }
 
             // console.log(selectionArray);
             // console.log(contentWidgets);
 
-            // changeWidgetPosition({ userId, changes: changes });
+            // changeWidgetPosition({ userId, selection: selection });
 
             console.log(decorations);
             console.log(users);
@@ -231,7 +229,7 @@ const CodeEditor = ({ user, roomId }) => {
             });
 
             monaco.editor.getModels()[0].applyEdits(code.changes) //change Content
-            changeSelection({ userId, userColor: users[userId].userColor, userName: users[userId].userName, changes: code.changes[0] })
+            // changeSelection({ userId, userColor: users[userId].userColor, userName: users[userId].userName, changes: code.changes[0] })
 
             // if (monaco.editor)
             // monaco.editor.getModel().applyEdits(code.changes) //change Content
@@ -317,6 +315,24 @@ const CodeEditor = ({ user, roomId }) => {
                     return newUsers;
                 });
             });
+
+            socket.on('code-selection-transfer', ({ userId, selection }) => {
+                console.log({ userId, selection }, 'code-selection-transfer');
+                changeSelection({ userId, userColor: users[userId].userColor, userName: users[userId].userName, selection })
+            })
+
+
+            monaco.editor.getEditors()[0].onDidChangeCursorSelection((e) => {
+                console.log(e);
+                socket.emit('code-selection', {
+                    roomId: roomId,
+                    userId: user._id,
+                    isSocket: isSocket,
+                    selection: e
+                })
+            });
+
+
         }
 
         socket.on('coderoom:user-disconnected', (data) => {
@@ -343,6 +359,8 @@ const CodeEditor = ({ user, roomId }) => {
         // });
 
 
+
+
         return () => {
             console.log('CodeEditor unmount');
             user && socket.emit('coderoom:leave-room', {
@@ -357,7 +375,7 @@ const CodeEditor = ({ user, roomId }) => {
     const handleCodeChanges = (value, event) => {
         // console.log(users);
         console.log(event);
-        console.log(isSocket);
+        // console.log(isSocket);
         if (!isSocket) {
             console.log('user made changes');
             socket.emit('code-change', {
@@ -416,6 +434,8 @@ const CodeEditor = ({ user, roomId }) => {
                     options={editorOptions}
                     onChange={handleCodeChanges}
                     onMount={handleEditorDidMount}
+
+
                 />
                 {/* {contentWidgets && Object.keys(contentWidgets).map((e) => {
                             return monaco.editor.addContentWidget(contentWidgets[e])
